@@ -7,6 +7,8 @@ export const colors = {
   primary: '#20B3F8',
   light: '#F6F7F8',
   dark: '#2A2A2D',
+  error: '#ef4444',
+  success: '#47d64b'
 }
 
 export const Colors = {
