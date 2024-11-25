@@ -21,7 +21,7 @@ type Props = {
 export const CustomButton = ({
   text,
   height = 45, 
-  width = 200,
+  width,
   borderRadius = height/2,
   fontWeight = 700,
   fontSize,
