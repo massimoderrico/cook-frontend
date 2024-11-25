@@ -20,7 +20,16 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    Italiana: require('../assets/fonts/Italiana-Regular.ttf'),
+    CormorantLight: require('@/assets/fonts/Cormorant/Cormorant-Light.ttf'),
+    CormorantRegular: require('@/assets/fonts/Cormorant/Cormorant-Regular.ttf'),
+    CormorantMedium: require('@/assets/fonts/Cormorant/Cormorant-Medium.ttf'),
+    CormorantSemiBold: require('@/assets/fonts/Cormorant/Cormorant-SemiBold.ttf'),
+    CormorantBold: require('@/assets/fonts/Cormorant/Cormorant-Bold.ttf'),
+    CormorantLightItalic: require('@/assets/fonts/Cormorant/Cormorant-LightItalic.ttf'),
+    CormorantItalic: require('@/assets/fonts/Cormorant/Cormorant-RegularItalic.ttf'),
+    CormorantMediumItalic: require('@/assets/fonts/Cormorant/Cormorant-MediumItalic.ttf'),
+    CormorantSemiBoldItalic: require('@/assets/fonts/Cormorant/Cormorant-SemiBoldItalic.ttf'),
+    CormorantBoldItalic: require('@/assets/fonts/Cormorant/Cormorant-BoldItalic.ttf'),
   });
 
   useEffect(() => {

@@ -20,6 +20,10 @@ export const Colors = {
     icon: colors.dark,
     tabIconDefault: colors.dark,
     tabIconSelected: colors.primary,
+    // error text 
+    // error bg
+    // success text
+    // success bg
   },
   dark: {
     text: colors.light,
@@ -28,5 +32,9 @@ export const Colors = {
     icon: colors.light,
     tabIconDefault: colors.light,
     tabIconSelected: colors.primary,
+    // error text 
+    // error bg
+    // success text
+    // success bg
   },
 };
