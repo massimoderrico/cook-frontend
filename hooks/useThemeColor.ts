@@ -8,8 +8,9 @@ import { useColorScheme } from 'react-native';
 import { Colors } from '@/constants/Colors';
 
 export function useThemeColor(
-  props: { light?: string; dark?: string },
-  colorName: keyof typeof Colors.light & keyof typeof Colors.dark
+  colorName: keyof typeof Colors.light & keyof typeof Colors.dark,
+  invertColors: boolean = false,
+  props: { light?: string; dark?: string } = {},
 ) {
   const theme = useColorScheme() ?? 'light';
   const colorFromProps = props[theme];
@@ -17,6 +18,10 @@ export function useThemeColor(
   if (colorFromProps) {
     return colorFromProps;
   } else {
+    if (invertColors) {
+      const invertTheme = theme === 'light' ? 'dark' : 'light';
+      return Colors[invertTheme][colorName];
+    }
     return Colors[theme][colorName];
   }
 }
