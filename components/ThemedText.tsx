@@ -5,6 +5,7 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
+  invertColors?: boolean;
   type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
 };
 
@@ -12,10 +13,11 @@ export function ThemedText({
   style,
   lightColor,
   darkColor,
+  invertColors,
   type = 'default',
   ...rest
 }: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const color = useThemeColor('text', invertColors);
 
   return (
     <Text
