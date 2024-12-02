@@ -5,8 +5,10 @@
 
 export const colors = {
   primary: '#20B3F8',
-  light: '#F6F7F8',
-  dark: '#2A2A2D',
+  lightText: '#000000',
+  lightBg: '#F6F7F8',
+  darkText: '#F6F7F8',
+  darkBg: '#2A2A2D',
   error: '#ef4444',
   success: '#47d64b'
 }
@@ -14,11 +16,11 @@ export const colors = {
 export const Colors = {
   primary: colors.primary,
   light: {
-    text: colors.dark,
-    background: colors.light,
+    text: colors.lightText,
+    background: colors.lightBg,
     tint: colors.primary,
-    icon: colors.dark,
-    tabIconDefault: colors.dark,
+    icon: colors.lightText,
+    tabIconDefault: colors.lightText,
     tabIconSelected: colors.primary,
     // error text 
     // error bg
@@ -26,11 +28,11 @@ export const Colors = {
     // success bg
   },
   dark: {
-    text: colors.light,
-    background: colors.dark,
+    text: colors.darkText,
+    background: colors.darkBg,
     tint: colors.primary,
-    icon: colors.light,
-    tabIconDefault: colors.light,
+    icon: colors.darkText,
+    tabIconDefault: colors.darkText,
     tabIconSelected: colors.primary,
     // error text 
     // error bg
