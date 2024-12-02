@@ -3,17 +3,19 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { TextInput, TextInputProps} from "react-native";
 import { Fonts } from "@/constants/Fonts";
 
-type Props = TextInputProps & {
+type InputTextboxProps = TextInputProps & {
     placeholderOpacity? : number,
+    fontWeight?: string | number
 }
 
 export const InputTextbox = ({
     placeholderOpacity = 100,
+    fontWeight = 500,
     style,
     ...rest
-    }: Props ) =>{
-        const textColor = useThemeColor('text', true);
-        const backgroundColor = useThemeColor('background', true);
+    }: InputTextboxProps ) =>{
+
+    const textColor = useThemeColor('text', true)
 
     return (
         <TextInput 
@@ -21,8 +23,8 @@ export const InputTextbox = ({
             style={[
             {   
                 color: textColor,
-                backgroundColor: backgroundColor,
-                fontFamily: Fonts(700),
+                backgroundColor: useThemeColor('background', true),
+                fontFamily: Fonts(fontWeight),
                 height: 44,
                 fontSize: 20,
                 borderRadius: 15, 
