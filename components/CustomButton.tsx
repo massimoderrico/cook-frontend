@@ -4,7 +4,8 @@ import { TextProps, TouchableOpacity, TouchableOpacityProps } from "react-native
 import { ThemedText } from "./ThemedText";
 import { Fonts } from "@/constants/Fonts";
 
-/* EXAMPLES --------------------------------
+/* EXAMPLE USAGE:
+
 <CustomButton
   text="Click Me"
   bgProps={{
