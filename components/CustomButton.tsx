@@ -1,58 +1,64 @@
 import React from "react";
-import { colors } from "@/constants/Colors";
-import { useThemeColor } from "@/hooks/useThemeColor";
-import { StyleProp, TextStyle, TouchableOpacity } from "react-native";
-import { ThemedView } from "./ThemedView";
+import { Colors } from "@/constants/Colors";
+import { TextProps, TouchableOpacity, TouchableOpacityProps } from "react-native";
 import { ThemedText } from "./ThemedText";
-import { Fonts, globalFont } from "@/constants/Fonts";
+import { Fonts } from "@/constants/Fonts";
 
-type Props = {
-    text : string,
-    height? : number,
-    width? : number,
-    borderRadius? : number,
-    fontWeight? : any,
-    fontSize? : number,
-    bgColor? : string ,
-    textColor? : string,
-    onPress? : (args: any) => any,
-  };
+/* EXAMPLES --------------------------------
+<CustomButton
+  text="Click Me"
+  bgProps={{
+      style: { backgroundColor: "red" },
+      onPress: () => console.log("Button Pressed"),
+  }}
+  textProps={{
+      fontWeight: 300,
+      style: { fontSize: 30 }, 
+}}/>
+*/
 
-export const CustomButton = ({
-  text,
-  height = 45, 
-  width,
-  borderRadius = height/2,
-  fontWeight = 700,
-  fontSize,
-  bgColor = colors.primary,
-  textColor = colors.dark,
-  onPress
-  }: Props ) =>{
+type TextButtonProps = TextProps & {
+  fontWeight?: number | string;
+};
+
+type CustomButtonProps = {
+  text: string;
+  bgProps?: TouchableOpacityProps;
+  textProps?: TextButtonProps;
+};
+
+export const CustomButton = (
+  { 
+    text, 
+    bgProps : { style: bgStyle, ...bgRest } = {},
+    textProps : { fontWeight, style:textStyle, ...textRest } = {}
+  }: CustomButtonProps) => {
   return (
-      <TouchableOpacity 
-        onPress={onPress}
-        style={
+    <TouchableOpacity
+      style={[
+        {
+          height: 50,
+          borderRadius: 25,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: Colors.primary,
+        },
+        bgStyle, 
+      ]}
+      {...bgRest}
+    >
+      <ThemedText
+        style={[
           {
-            height: height,
-            width: width,
-            borderRadius: borderRadius,
-            backgroundColor: bgColor,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <ThemedText style={
-            {
-              color: textColor, 
-              fontFamily: Fonts(fontWeight),
-              fontSize: fontSize,
-            }}>
-            {text}
-          </ThemedText>
-          
-      </TouchableOpacity>)
-}
-
-
-
-
+            color: Colors.light.text,
+            fontFamily: Fonts(fontWeight),
+          },
+          textStyle,
+        ]}
+        {...textRest}
+      >
+        {text}
+      </ThemedText>
+    </TouchableOpacity>
+  );
+};
