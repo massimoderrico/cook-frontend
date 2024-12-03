@@ -36,14 +36,14 @@ export const Login = () => {
             </ThemedView>
             {isLogin ?
             <ThemedView style={{ justifyContent: 'space-evenly', alignItems: "center" }}>
-                <InputTextbox style={{ width: width/1.25, marginTop: 30}} placeholder="Email Address"/>
+                <InputTextbox style={{ width: width/1.25, marginTop: 25}} placeholder="Email Address"/>
                 <InputTextbox secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Password"/>
                 <CustomButton text="Login" bgProps={{style: {width: width/1.75, marginTop: 30 }}} />
             </ThemedView>
             :
             <ThemedView style={{ justifyContent: 'space-evenly', alignItems: "center" }}>
-                <InputTextbox style={{ width: width/1.25, marginTop: 30}} placeholder="Username"/>
-                <InputTextbox style={{ width: width/1.25, marginTop: 30}} placeholder="Email Address"/>
+                <InputTextbox style={{ width: width/1.25, marginTop: 25}} placeholder="Username"/>
+                <InputTextbox style={{ width: width/1.25, marginTop: 25}} placeholder="Email Address"/>
                 <InputTextbox secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Password"/>
                 <InputTextbox secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Confirm Password"/>
                 <CustomButton text="Sign Up" bgProps={{style: {width: width/1.75, marginTop: 30 }}} />
