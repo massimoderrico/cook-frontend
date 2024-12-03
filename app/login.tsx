@@ -13,8 +13,7 @@ export const Login = () => {
     const {height, width} = useWindowDimensions();
     const [isLogin, setIsLogin] = useState(false);
     return (
-        <ThemedView style={{height: height, width: width, justifyContent: "center", alignItems: "center"}}>
-
+        <ThemedView style={{height: height, width: width, alignItems: "center", paddingTop: height/7}}>
             <Logo width={width/2} height={width/2.5}/>
             <ThemedText type="title">
                 CooK
