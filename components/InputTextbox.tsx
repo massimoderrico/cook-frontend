@@ -10,12 +10,13 @@ type InputTextboxProps = TextInputProps & {
 
 export const InputTextbox = ({
     placeholderOpacity = 100,
-    fontWeight = 500,
+    fontWeight = 700,
     style,
     ...rest
     }: InputTextboxProps ) =>{
 
     const textColor = useThemeColor('text', true)
+    const bgColor = useThemeColor('background', true)
 
     return (
         <TextInput 
@@ -25,10 +26,15 @@ export const InputTextbox = ({
                 color: textColor,
                 backgroundColor: useThemeColor('background', true),
                 fontFamily: Fonts(fontWeight),
-                height: 44,
+                height: 50,
                 fontSize: 20,
                 borderRadius: 15, 
-                paddingLeft: 15,  
+                paddingLeft: 25,
+                shadowColor: bgColor,
+                shadowOffset: {width: 0, height: 0},
+                shadowOpacity: 0.2,
+                shadowRadius: 10,
+                  
             },
             style]}
             {...rest}>

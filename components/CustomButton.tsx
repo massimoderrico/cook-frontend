@@ -3,6 +3,7 @@ import { Colors } from "@/constants/Colors";
 import { TextProps, TouchableOpacity, TouchableOpacityProps } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { Fonts } from "@/constants/Fonts";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 /* EXAMPLE USAGE:
 
@@ -32,17 +33,21 @@ export const CustomButton = (
   { 
     text, 
     bgProps : { style: bgStyle, ...bgRest } = {},
-    textProps : { fontWeight, style:textStyle, ...textRest } = {}
+    textProps : { fontWeight = 700 , style:textStyle, ...textRest } = {}
   }: CustomButtonProps) => {
   return (
     <TouchableOpacity
       style={[
         {
-          height: 50,
-          borderRadius: 25,
+          height: 55,
+          borderRadius: 27.5,
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: Colors.primary,
+          shadowColor: useThemeColor('background', true),
+          shadowOffset: {width: 0, height: 0},
+          shadowOpacity: 0.2,
+          shadowRadius: 10,
         },
         bgStyle, 
       ]}
@@ -53,6 +58,8 @@ export const CustomButton = (
           {
             color: Colors.light.text,
             fontFamily: Fonts(fontWeight),
+            fontSize: 26,
+            lineHeight: 26,
           },
           textStyle,
         ]}
