@@ -6,6 +6,8 @@ import { ThemedView} from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
 import React, { useState } from "react";
 import { TouchableOpacity, useWindowDimensions, View } from "react-native";
+import { StyleSheet } from "react-native";
+
 
 export const Login = () => {
     const {height, width} = useWindowDimensions();
@@ -33,14 +35,14 @@ export const Login = () => {
                 
             </ThemedView>
             {isLogin ?
-            <ThemedView style={{ justifyContent: 'space-evenly', alignItems: "center", marginTop: 30}}>
+            <ThemedView style={{ justifyContent: 'space-evenly', alignItems: "center" }}>
                 <InputTextbox style={{ width: width/1.25, marginTop: 30}} placeholder="Email Address"/>
                 <InputTextbox secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Password"/>
                 <CustomButton text="Login" bgProps={{style: {width: width/1.75, marginTop: 30 }}} />
             </ThemedView>
             :
-            <ThemedView style={{ justifyContent: 'space-evenly', alignItems: "center", marginTop: 30}}>
-                <InputTextbox style={{ width: width/1.25, marginTop: 25}} placeholder="Username"/>
+            <ThemedView style={{ justifyContent: 'space-evenly', alignItems: "center" }}>
+                <InputTextbox style={{ width: width/1.25, marginTop: 30}} placeholder="Username"/>
                 <InputTextbox style={{ width: width/1.25, marginTop: 30}} placeholder="Email Address"/>
                 <InputTextbox secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Password"/>
                 <InputTextbox secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Confirm Password"/>
@@ -51,3 +53,10 @@ export const Login = () => {
     );
 
 }
+
+// const styles = StyleSheet.create({
+//     inputText: {
+//         width: width/1.25, 
+//         marginTop: 25
+//     }
+// })
