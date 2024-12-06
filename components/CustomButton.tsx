@@ -33,7 +33,7 @@ export const CustomButton = (
   { 
     text, 
     bgProps : { style: bgStyle, ...bgRest } = {},
-    textProps : { fontWeight = 700 , style:textStyle, ...textRest } = {}
+    textProps : { fontWeight = 500 , style:textStyle, ...textRest } = {}
   }: CustomButtonProps) => {
   return (
     <TouchableOpacity
