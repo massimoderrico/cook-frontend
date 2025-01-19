@@ -6,6 +6,7 @@ export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
   invertColors?: boolean;
+  fontWeight?: 300 | 400 | 500 | 600 | 700 | "light" | "regular" | "medium" | "semibold" | "bold"
   type?: 'default' | 'title' | 'tabtitle' | 'defaultSemiBold' | 'subtitle' | 'link';
 };
 
@@ -15,6 +16,7 @@ export function ThemedText({
   darkColor,
   invertColors,
   type = 'default',
+  fontWeight = 400,
   ...rest
 }: ThemedTextProps) {
   const color = useThemeColor('text', invertColors);
@@ -29,6 +31,7 @@ export function ThemedText({
         type === 'tabtitle' ? styles.tabtitle : undefined,
         type === 'subtitle' ? styles.subtitle : undefined,
         type === 'link' ? styles.link : undefined,
+        {fontFamily: Fonts(fontWeight)},
         style,
       ]}
       {...rest}
@@ -57,8 +60,8 @@ const styles = StyleSheet.create({
     lineHeight: 32,
   },
   subtitle: {
-    fontSize: 24,
-    fontFamily: Fonts('semibold'),
+    fontSize: 30,
+    fontFamily: Fonts('bold'),
   },
   link: {
     lineHeight: 30,

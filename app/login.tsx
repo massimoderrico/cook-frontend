@@ -1,13 +1,11 @@
 import { CustomButton } from "@/components/CustomButton";
-import { InputTextbox } from "@/components/InputTextbox";
+import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { Logo } from "@/components/Logo";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView} from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
 import React, { useState } from "react";
 import { TouchableOpacity, useWindowDimensions, View } from "react-native";
-import { StyleSheet } from "react-native";
-
 
 export const Login = () => {
     const {height, width} = useWindowDimensions();
@@ -35,16 +33,16 @@ export const Login = () => {
             </ThemedView>
             {isLogin ?
             <ThemedView style={{ justifyContent: 'space-evenly', alignItems: "center" }}>
-                <InputTextbox style={{ width: width/1.25, marginTop: 25}} placeholder="Email Address"/>
-                <InputTextbox secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Password"/>
+                <ThemedTextInput style={{ width: width/1.25, marginTop: 25}} placeholder="Email Address"/>
+                <ThemedTextInput secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Password"/>
                 <CustomButton text="Login" bgProps={{style: {width: width/1.75, marginTop: 30 }}} />
             </ThemedView>
             :
             <ThemedView style={{ justifyContent: 'space-evenly', alignItems: "center" }}>
-                <InputTextbox style={{ width: width/1.25, marginTop: 25}} placeholder="Username"/>
-                <InputTextbox style={{ width: width/1.25, marginTop: 25}} placeholder="Email Address"/>
-                <InputTextbox secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Password"/>
-                <InputTextbox secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Confirm Password"/>
+                <ThemedTextInput style={{ width: width/1.25, marginTop: 25}} placeholder="Username"/>
+                <ThemedTextInput style={{ width: width/1.25, marginTop: 25}} placeholder="Email Address"/>
+                <ThemedTextInput secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Password"/>
+                <ThemedTextInput secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Confirm Password"/>
                 <CustomButton text="Sign Up" bgProps={{style: {width: width/1.75, marginTop: 30 }}} />
             </ThemedView>
             }
@@ -52,10 +50,3 @@ export const Login = () => {
     );
 
 }
-
-// const styles = StyleSheet.create({
-//     inputText: {
-//         width: width/1.25, 
-//         marginTop: 25
-//     }
-// })
