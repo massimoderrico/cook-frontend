@@ -4,10 +4,12 @@ import { ThemedTextInput } from "../ThemedTextInput";
 import { Colors } from "@/constants/Colors";
 import { ThemedView } from "../ThemedView";
 import { ThemedText } from "../ThemedText";
-import { Switch } from "react-native";
+import { InputAccessoryView, KeyboardAvoidingView, SafeAreaView, Switch } from "react-native";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { CustomButton } from "../CustomButton";
 import { ThemedAdditveTextInput } from "../ThemedAdditiveTextInput";
+import { ThemedIngredientAdditveTextInput } from "../ThemedIngredientAdditiveTextInput";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 export const CreateRecipePage = ( ) => {
     const [recipeName, onChangeRecipeName ] = useState<string>()
     const [description, onChangeDescription ] = useState<string>()
@@ -16,9 +18,11 @@ export const CreateRecipePage = ( ) => {
     const [isPublic, setIsPublic ] = useState<boolean>(false)
     const [ingredients, setIngredients] = useState<string[]>([])
     const [directions, setDirections] = useState<string[]>([])
+    const inputAccessoryViewID = 'uniqueID';
 
     return (
-        <ThemedScrollView style={{paddingHorizontal: 20}} showsVerticalScrollIndicator={false}>
+        <KeyboardAvoidingView behavior="padding" style={{flex: 3}}>
+        <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} >
             <ThemedTextInput 
             placeholder="Recipe Name" 
             value={recipeName} 
@@ -42,9 +46,9 @@ export const CreateRecipePage = ( ) => {
                 height: 100 
             }}
             />
-            <ThemedView style= {{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10}}>
+            <ThemedView style= {{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
                 <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <ThemedText fontWeight={500} style={{fontSize: 22}}>
+                    <ThemedText fontWeight={500} >
                         Prepration Time
                     </ThemedText>
                 </ThemedView>
@@ -58,14 +62,14 @@ export const CreateRecipePage = ( ) => {
                             paddingHorizontal: 10,
                             borderWidth: 2,
                             borderColor: Colors.primary,
-                            fontSize: 22
+                            
                         }}
                     />
                 </ThemedView>       
             </ThemedView>
-            <ThemedView style= {{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10}}>
+            <ThemedView style= {{flexDirection: 'row', justifyContent: 'space-between', marginTop: 15}}>
                 <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <ThemedText fontWeight={500} style={{fontSize: 22}}>
+                    <ThemedText fontWeight={500}>
                         Cook Time
                     </ThemedText>
                 </ThemedView>
@@ -79,14 +83,14 @@ export const CreateRecipePage = ( ) => {
                             paddingHorizontal: 10,
                             borderWidth: 2,
                             borderColor: Colors.primary,
-                            fontSize: 22
+                            
                         }}
                     />
                 </ThemedView>       
             </ThemedView>
-            <ThemedView style= {{flexDirection: 'row', justifyContent: 'space-between', marginTop: 10}}>
+            <ThemedView style= {{flexDirection: 'row', justifyContent: 'space-between', marginTop: 15}}>
                 <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <ThemedText fontWeight={500}  style={{fontSize: 22}}>
+                    <ThemedText fontWeight={500} >
                         Public Recipe
                     </ThemedText>
                 </ThemedView>
@@ -102,14 +106,16 @@ export const CreateRecipePage = ( ) => {
             <ThemedText type= {"subtitle"} fontWeight={700} style={{marginTop: 30}}>
                 Ingredients
             </ThemedText>
-            <ThemedAdditveTextInput inputArray={ingredients} setInputArray={setIngredients}/>
+            <ThemedIngredientAdditveTextInput inputArray={ingredients} setInputArray={setIngredients}/>
             <ThemedText type= {"subtitle"} fontWeight={700} style={{marginTop: 30}}>
                 Directions
             </ThemedText>
+            
             <ThemedAdditveTextInput inputArray={directions} setInputArray={setDirections} numbered/>
-            <CustomButton text="Save Recipe" bgProps={{style: {marginTop: 30}, onPress: () => console.log(ingredients)}} />
+            <CustomButton text="Save Recipe" bgProps={{style: {marginVertical: 30}, onPress: () => console.log(ingredients)}} />
             
         </ThemedScrollView>
+        </KeyboardAvoidingView>
     )
 }
 

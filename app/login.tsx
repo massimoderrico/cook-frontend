@@ -6,12 +6,15 @@ import { ThemedView} from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
 import React, { useState } from "react";
 import { TouchableOpacity, useWindowDimensions, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { ThemedScrollView } from "@/components/ThemedScrollView";
+
 
 export const Login = () => {
     const {height, width} = useWindowDimensions();
     const [isLogin, setIsLogin] = useState(false);
     return (
-        <ThemedView style={{height: height, width: width, alignItems: "center", paddingTop: height/7}}>
+        <ThemedScrollView contentContainerStyle={{alignItems: "center"}} style={{height: height, width: width, paddingTop: height/10}}>
             <Logo width={width/2} height={width/2.5}/>
             <ThemedText type="title">
                 CooK
@@ -46,7 +49,14 @@ export const Login = () => {
                 <CustomButton text="Sign Up" bgProps={{style: {width: width/1.75, marginTop: 30 }}} />
             </ThemedView>
             }
-        </ThemedView>
+        </ThemedScrollView>
     );
 
 }
+
+// const styles = StyleSheet.create({
+//     inputText: {
+//         width: width/1.25, 
+//         marginTop: 25
+//     }
+// })

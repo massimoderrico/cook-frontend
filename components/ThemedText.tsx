@@ -1,4 +1,4 @@
-import { Text, type TextProps, StyleSheet } from 'react-native';
+import { Text, type TextProps, StyleSheet, TextStyle } from 'react-native';
 import { Fonts, globalFont } from '@/constants/Fonts';
 import { useThemeColor } from '@/hooks/useThemeColor';
 
@@ -6,7 +6,7 @@ export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
   invertColors?: boolean;
-  fontWeight?: 300 | 400 | 500 | 600 | 700 | "light" | "regular" | "medium" | "semibold" | "bold"
+  fontWeight?: TextStyle["fontWeight"]
   type?: 'default' | 'title' | 'tabtitle' | 'defaultSemiBold' | 'subtitle' | 'link';
 };
 
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts('bold'),
   },
   tabtitle: {
-    fontSize: 30,
+    fontSize: 24,
     fontFamily: Fonts('semibold'),
     lineHeight: 32,
   },

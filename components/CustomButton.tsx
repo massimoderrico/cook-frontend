@@ -58,7 +58,7 @@ export const CustomButton = (
           {
             color: Colors.light.text,
             fontFamily: Fonts(fontWeight),
-            fontSize: 26,
+            fontSize: 22,
             lineHeight: 26,
           },
           textStyle,
