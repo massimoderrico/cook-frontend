@@ -15,6 +15,8 @@ export const colors = {
 
 export const Colors = {
   primary: colors.primary,
+  error: colors.error,
+  success: colors.success,
   light: {
     text: colors.lightText,
     background: colors.lightBg,
@@ -22,10 +24,6 @@ export const Colors = {
     icon: colors.lightText,
     tabIconDefault: colors.lightText,
     tabIconSelected: colors.primary,
-    // error text 
-    // error bg
-    // success text
-    // success bg
   },
   dark: {
     text: colors.darkText,
