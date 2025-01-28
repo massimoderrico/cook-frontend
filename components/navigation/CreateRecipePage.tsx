@@ -21,7 +21,7 @@ export const CreateRecipePage = ( ) => {
     const inputAccessoryViewID = 'uniqueID';
 
     return (
-        <KeyboardAvoidingView behavior="padding" style={{flex: 3}}>
+        <KeyboardAvoidingView behavior="position" >
         <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} >
             <ThemedTextInput 
             placeholder="Recipe Name" 
@@ -111,7 +111,7 @@ export const CreateRecipePage = ( ) => {
                 Directions
             </ThemedText>
             
-            <ThemedAdditveTextInput inputArray={directions} setInputArray={setDirections} numbered/>
+            <ThemedAdditveTextInput textInputProps={{placeholder: "Add vanilla to cake batter"}} inputArray={directions} setInputArray={setDirections} numbered numberedPrefix="Step "/>
             <CustomButton text="Save Recipe" bgProps={{style: {marginVertical: 30}, onPress: () => console.log(ingredients)}} />
             
         </ThemedScrollView>

@@ -12,6 +12,7 @@ export type ThemedDropdownProps = DropdownProps<any> & {
   invertColors?: boolean;
   fontWeight?: string | number
   fontSize?: number
+  placeholderOpacity?: number
   textAlign ?: TextStyle["textAlign"]
 };
 
@@ -21,7 +22,8 @@ export function ThemedDropdown({
     darkColor, 
     invertColors,
     fontWeight = 700,
-    fontSize = 20, 
+    fontSize = 20,
+    placeholderOpacity = 100,
     textAlign,
     ...rest }: ThemedDropdownProps) {
     const textColor = useThemeColor('text', !invertColors);
@@ -88,7 +90,7 @@ export function ThemedDropdown({
     }}
     placeholderStyle= {{
         borderRadius: 15,
-        color: textColor,
+        color: textColor + placeholderOpacity.toString(16),
         backgroundColor: backgroundColor,
         fontFamily: Fonts(fontWeight),
         fontSize: fontSize,

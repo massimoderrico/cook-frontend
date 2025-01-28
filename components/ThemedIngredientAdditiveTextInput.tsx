@@ -11,6 +11,7 @@ import { Colors } from "@/constants/Colors";
 import { Text } from "react-native";
 import { ThemedDropdown } from "./ThemedDropdown";
 import { MeasurementTypes } from "@/types/graphql";
+import { Fonts } from "@/constants/Fonts";
 
 type ThemedIngredientAdditiveTextInput = {
   inputArray: string[];
@@ -28,7 +29,7 @@ export const ThemedIngredientAdditveTextInput = (
     } : ThemedIngredientAdditiveTextInput) => {
 
     const [measurement, setMeasurement] = useState<string>()
-    const [measurementType, setMeasurementType] = useState<string>(MeasurementTypes[0].value)
+    const [measurementType, setMeasurementType] = useState<string>()
     const [ingredient, setIngredient] = useState<string>("")
     const [displayError, setDisplayError] = useState<boolean>(false)
 
@@ -70,8 +71,8 @@ export const ThemedIngredientAdditveTextInput = (
                         labelField={"label"} 
                         valueField={"value"} 
                         onChange={(item) => setMeasurementType(item.value)}
-                        style={{ flex: 2, paddingLeft: 10}}
-                        value={MeasurementTypes[0].value}
+                        style={{ flex: 2, paddingLeft: 10, marginHorizontal: 4, }}
+                        placeholder="tsp"
                         maxHeight={225}
                     />
                     <ThemedTextInput 
@@ -88,19 +89,19 @@ export const ThemedIngredientAdditveTextInput = (
                     />
                    
             </ThemedView>
-            {displayError && <Text style={{color: Colors.error, fontSize: 16, marginTop: 5}}>
-               "Fields cannot be empty"
-            </Text>}
+            <ThemedView style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+            <Text style={{color: Colors.error, fontSize: 16, marginTop: 5, fontFamily: Fonts(600) }}>
+              {displayError ? "Fields cannot be empty" : ""}
+            </Text>
             <CustomButton 
                 text= "+ Add" 
                 bgProps={{ 
-                    style: { width: 80, height: 36, marginTop: 10, alignSelf: "flex-end"},
+                    style: { width: 80, height: 36, marginTop: 10, },
                     onPress: () => {
                         if (measurement && measurementType && ingredient) {
                         setDisplayError(false)
                         setInputArray([...inputArray, `${measurement} ${measurementType} ${ingredient}`]);
                         setMeasurement("")
-                        setMeasurementType("")
                         setIngredient("")
                     }
                     else{
@@ -109,6 +110,7 @@ export const ThemedIngredientAdditveTextInput = (
                 textProps={{
                     style: { fontSize: 20 }, 
                 }}/>
+            </ThemedView>
         </ThemedView>
     )
 }
