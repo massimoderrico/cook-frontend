@@ -28,7 +28,6 @@ export const CreateRecipePage = ( ) => {
             value={recipeName} 
             onChangeText={onChangeRecipeName}
             style={{marginTop: 20,
-              
                 borderWidth: 2,
                 borderColor: Colors.primary,
                 paddingLeft: 10
@@ -102,7 +101,7 @@ export const CreateRecipePage = ( ) => {
                         value={isPublic}
                     />
                 </ThemedView>       
-            </ThemedView>           
+            </ThemedView>    
             <ThemedText type= {"subtitle"} fontWeight={700} style={{marginTop: 30}}>
                 Ingredients
             </ThemedText>
