@@ -48,7 +48,7 @@ export const ThemedIngredientAdditveTextInput = (
                     
                 </ThemedView>
             ))}
-            <ThemedView style= {{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 20}}>
+            <ThemedView style= {{flexDirection: 'row', marginTop: 20}}>
                     <ThemedTextInput 
                             placeholder="3" 
                             value={measurement} 
