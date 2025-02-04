@@ -18,17 +18,15 @@ export const CreateRecipePage = ( ) => {
     const [isPublic, setIsPublic ] = useState<boolean>(false)
     const [ingredients, setIngredients] = useState<string[]>([])
     const [directions, setDirections] = useState<string[]>([])
-    const inputAccessoryViewID = 'uniqueID';
 
     return (
-        <KeyboardAvoidingView behavior="padding" style={{flex: 3}}>
+        <KeyboardAvoidingView behavior="position" >
         <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} >
             <ThemedTextInput 
             placeholder="Recipe Name" 
             value={recipeName} 
             onChangeText={onChangeRecipeName}
             style={{marginTop: 20,
-              
                 borderWidth: 2,
                 borderColor: Colors.primary,
                 paddingLeft: 10
@@ -53,7 +51,7 @@ export const CreateRecipePage = ( ) => {
                     </ThemedText>
                 </ThemedView>
                 <ThemedView style={{justifyContent: 'center', alignItems: 'center', }}>
-                    <ThemedTextInput 
+                    <ThemedTextInput  
                         placeholder="30 mins" 
                         value={prepTime} 
                         onChangeText={onChangePrepTime} 
@@ -102,7 +100,7 @@ export const CreateRecipePage = ( ) => {
                         value={isPublic}
                     />
                 </ThemedView>       
-            </ThemedView>           
+            </ThemedView>    
             <ThemedText type= {"subtitle"} fontWeight={700} style={{marginTop: 30}}>
                 Ingredients
             </ThemedText>
@@ -111,7 +109,7 @@ export const CreateRecipePage = ( ) => {
                 Directions
             </ThemedText>
             
-            <ThemedAdditveTextInput inputArray={directions} setInputArray={setDirections} numbered/>
+            <ThemedAdditveTextInput textInputProps={{placeholder: "Add vanilla to cake batter"}} inputArray={directions} setInputArray={setDirections} numbered numberedPrefix="Step "/>
             <CustomButton text="Save Recipe" bgProps={{style: {marginVertical: 30}, onPress: () => console.log(ingredients)}} />
             
         </ThemedScrollView>

@@ -2,11 +2,14 @@ import React from "react";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { KeyboardAvoidingView, TextInput, TextInputProps, TextStyle} from "react-native";
 import { Fonts } from "@/constants/Fonts";
+import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { IconProps } from "@expo/vector-icons/build/createIconSet";
 
 export type ThemedTextInputProps = TextInputProps & {
     placeholderOpacity? : number,
     invertColors? : boolean,
-    fontWeight?: TextStyle["fontWeight"]
+    fontWeight?: TextStyle["fontWeight"],
+    iconName? : string
 }
 
 export const ThemedTextInput = ({
@@ -19,7 +22,7 @@ export const ThemedTextInput = ({
 
     const textColor = useThemeColor('text', !invertColors)
     const backgroundColor = useThemeColor('background', !invertColors)
-    
+    const placeholderTextColor = textColor + placeholderOpacity.toString(16)
 
     return (
             <TextInput 
