@@ -18,7 +18,6 @@ export const CreateRecipePage = ( ) => {
     const [isPublic, setIsPublic ] = useState<boolean>(false)
     const [ingredients, setIngredients] = useState<string[]>([])
     const [directions, setDirections] = useState<string[]>([])
-    const inputAccessoryViewID = 'uniqueID';
 
     return (
         <KeyboardAvoidingView behavior="position" >
@@ -52,7 +51,7 @@ export const CreateRecipePage = ( ) => {
                     </ThemedText>
                 </ThemedView>
                 <ThemedView style={{justifyContent: 'center', alignItems: 'center', }}>
-                    <ThemedTextInput 
+                    <ThemedTextInput  
                         placeholder="30 mins" 
                         value={prepTime} 
                         onChangeText={onChangePrepTime} 
