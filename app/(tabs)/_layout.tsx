@@ -15,32 +15,51 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors.primary,
         headerShown: false,
+        tabBarShowLabel: false
       }}>
       <Tabs.Screen
-        name="home"
+        name="index"
         options={{
-          title: 'Home',
+          title: undefined,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="search"
+        options={{
+          title: undefined,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="add-recipe"
         options={{
-          title: 'Explore',
+          title: undefined,
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+            <TabBarIcon name={focused ? 'add-circle' : 'add-circle-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="dev"
+        name="recipes"
         options={{
-          title: 'Dev',
+          title: undefined,
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ), 
+            <TabBarIcon name={focused ? 'book' : 'book-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: undefined,
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
+          ),
         }}
       />
     </Tabs>
