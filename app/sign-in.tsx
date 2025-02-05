@@ -8,9 +8,12 @@ import React, { useState } from "react";
 import { TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { StyleSheet } from "react-native";
 import { ThemedScrollView } from "@/components/ThemedScrollView";
+import { useSession } from "@/ctx";
+import { router } from "expo-router";
 
 
-export const Login = () => {
+export default function SignIn() {
+    const { signIn } = useSession();
     const {height, width} = useWindowDimensions();
     const [isLogin, setIsLogin] = useState(false);
     return (
@@ -46,7 +49,16 @@ export const Login = () => {
                 <ThemedTextInput style={{ width: width/1.25, marginTop: 25}} placeholder="Email Address"/>
                 <ThemedTextInput secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Password"/>
                 <ThemedTextInput secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Confirm Password"/>
-                <CustomButton text="Sign Up" bgProps={{style: {width: width/1.75, marginTop: 30 }}} />
+                <CustomButton 
+                    text="Sign Up" 
+                    bgProps={{
+                        onPress: () => {
+                            signIn();
+                            router.replace('/');
+                        },
+                        style: {width: width/1.75, marginTop: 30 }
+                    }} 
+                />
             </ThemedView>
             }
         </ThemedScrollView>
