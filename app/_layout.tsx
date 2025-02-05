@@ -1,13 +1,15 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
+
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { SessionProvider } from '@/ctx';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql', // Your GraphQL endpoint
@@ -43,13 +45,18 @@ export default function RootLayout() {
   }
 
   return (
-    <ApolloProvider client={client}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </ThemeProvider>
-    </ApolloProvider>
+    <SessionProvider>
+      <Slot />
+    </SessionProvider>
+    
+    // <ApolloProvider client={client}>
+    //   <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    //     <Stack>
+    //       <Stack.Screen name="sign-in"/>
+    //       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    //       <Stack.Screen name="+not-found" />
+    //     </Stack>
+    //   </ThemeProvider>
+    // </ApolloProvider>
   );
 }
