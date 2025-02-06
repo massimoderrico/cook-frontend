@@ -25,3 +25,9 @@ export const MeasurementTypes = [
   { label: 'part', value: 'part' },
   { label: 'drop', value: 'drop' },
 ];
+
+export const ContentType = [
+  { label: 'Recipes', value: 'Recipe' },
+  { label: 'Cookbooks', value: 'Cookbook' },
+  { label: 'Users', value: "User" },
+]
