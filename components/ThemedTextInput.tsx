@@ -4,7 +4,6 @@ import { KeyboardAvoidingView, TextInput, TextInputProps, TextStyle} from "react
 import { Fonts } from "@/constants/Fonts";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { IconProps } from "@expo/vector-icons/build/createIconSet";
-import Ionicons from "@expo/vector-icons/Ionicons";
 
 export type ThemedTextInputProps = TextInputProps & {
     placeholderOpacity? : number,
@@ -18,7 +17,6 @@ export const ThemedTextInput = ({
     fontWeight = 700,
     invertColors,
     style,
-    iconName,
     ...rest
     }: ThemedTextInputProps ) =>{
 
@@ -38,7 +36,6 @@ export const ThemedTextInput = ({
                     fontSize: 20,
                     borderRadius: 15, 
                     paddingLeft: 25,
-                    paddingRight: iconName ? 15 : 0,
                     shadowColor: backgroundColor,
                     shadowOffset: {width: 0, height: 0},
                     shadowOpacity: 0.2,
@@ -46,14 +43,6 @@ export const ThemedTextInput = ({
                 },
                 style]}
                 {...rest}>
-                {iconName && (
-                    <Ionicons
-                        name={iconName as any}
-                        size={24}
-                        color={placeholderTextColor}
-                        style={{ marginLeft: 10 }}
-                    />
-                )}
             </TextInput>
     )
 }
