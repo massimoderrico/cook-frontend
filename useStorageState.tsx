@@ -4,6 +4,7 @@ import { Platform } from 'react-native';
 
 type UseStateHook<T> = [[boolean, T | null], (value: T | null) => void];
 
+
 function useAsyncState<T>(
   initialValue: [boolean, T | null] = [true, null],
 ): UseStateHook<T> {
@@ -33,32 +34,30 @@ export async function setStorageItemAsync(key: string, value: string | null) {
   }
 }
 
-export function useStorageState(key: string): UseStateHook<string> {
-  // Public
-  const [state, setState] = useAsyncState<string>();
+export function useStorageState<T>(key: string): [[boolean, T | null], (value: T | null) => void] {
+  const [state, setState] = useAsyncState<T>();
 
-  // Get
   useEffect(() => {
-    if (Platform.OS === 'web') {
+    (async () => {
       try {
-        if (typeof localStorage !== 'undefined') {
-          setState(localStorage.getItem(key));
+        const storedValue = await SecureStore.getItemAsync(key);
+        if (storedValue) {
+          setState(JSON.parse(storedValue)); // ✅ Parse stored JSON
         }
       } catch (e) {
-        console.error('Local storage is unavailable:', e);
+        console.error('Error reading storage:', e);
       }
-    } else {
-      SecureStore.getItemAsync(key).then(value => {
-        setState(value);
-      });
-    }
+    })();
   }, [key]);
 
-  // Set
   const setValue = useCallback(
-    (value: string | null) => {
+    async (value: T | null) => {
       setState(value);
-      setStorageItemAsync(key, value);
+      if (value === null) {
+        await SecureStore.deleteItemAsync(key);
+      } else {
+        await SecureStore.setItemAsync(key, JSON.stringify(value)); // ✅ Store as JSON
+      }
     },
     [key]
   );

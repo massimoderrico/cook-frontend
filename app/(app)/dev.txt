@@ -7,7 +7,6 @@ export default function Dev() {
     return (
         <SafeAreaView
         style={{backgroundColor:backgroundColor}}>
-
             <Login/>
         </SafeAreaView>
     )
