@@ -26,6 +26,7 @@ export const ThemedTextInput = ({
 
     return (
             <TextInput 
+                autoCapitalize="none"
                 placeholderTextColor={(textColor + placeholderOpacity.toString(16))}
                 style={[
                 {   

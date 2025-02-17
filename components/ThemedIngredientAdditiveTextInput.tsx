@@ -10,7 +10,7 @@ import { TabBarIcon } from "./navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { Text } from "react-native";
 import { ThemedDropdown } from "./ThemedDropdown";
-import { MeasurementTypes } from "@/types/graphql";
+import { MeasurementTypes } from "@/constants/Data";
 import { Fonts } from "@/constants/Fonts";
 
 type ThemedIngredientAdditiveTextInput = {
