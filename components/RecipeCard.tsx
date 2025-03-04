@@ -39,7 +39,7 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
             color: "white", 
             fontSize: 18
             }}> 
-            {recipe.cookTime.toString()} min
+            {recipe.cookTime?.toString()} min
           </Text>
         </View>
         <View style={{
