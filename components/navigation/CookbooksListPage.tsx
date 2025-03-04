@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { ThemedScrollView } from "../ThemedScrollView";
 import { CookbookCard } from "@/components/CookbookCard";
 import { Cookbook } from "@/types/graphql";
-import { ThemedTextInput } from "../ThemedTextInput";
-import { Colors } from "@/constants/Colors";
 import { ThemedView } from "../ThemedView";
-import { ThemedText } from "../ThemedText";
-import { KeyboardAvoidingView, Switch } from "react-native";
-import { useThemeColor } from "@/hooks/useThemeColor";
 import { CustomButton } from "../CustomButton";
 
 export const CookbooksListPage = ({cookbooks}: {cookbooks: Cookbook[]}) => {
