@@ -18,7 +18,6 @@ export const CookbookCardSelection = ({cookbook}: {cookbook: Cookbook}) => {
         <ThemedView invertColors={true}
             style={{
                 alignItems: "center",
-                height: 100,
                 width: 370,
                 borderRadius: 20,
                 flexDirection: "row",
@@ -33,14 +32,16 @@ export const CookbookCardSelection = ({cookbook}: {cookbook: Cookbook}) => {
                 shadowRadius: 10,
                 elevation: 5,
             }}>
-            <ThemedView invertColors={true}>
+            <View style={{ flex: 1, justifyContent: "center" }}>
                 <ThemedText invertColors={true}
-                    style={{ 
-                        fontSize: 25, 
+                    style={{
+                        fontSize: 25,
                         fontWeight: "bold",
-                        margin: 5 
+                        margin: 5,
+                        flexWrap: "wrap",
+                        textAlign: "left",
                     }}>
-                        {cookbook.name}
+                    {cookbook.name}
                 </ThemedText>
                 <View
                     style={{
@@ -50,13 +51,13 @@ export const CookbookCardSelection = ({cookbook}: {cookbook: Cookbook}) => {
                         paddingVertical: 5,
                         paddingHorizontal: 15,
                         borderRadius: 20,
-                        width: 125,
+                        alignSelf: "flex-start",
                     }}>
                     <ThemedText style={{ color: "white", fontSize: 21 }}>
                         {cookbook.recipes?.length} Recipes
                     </ThemedText>
                 </View>
-            </ThemedView>
+            </View>
             <TouchableOpacity onPress={toggleSelection}>
                 <Ionicons
                     name={isSelected ? "checkbox" : "square-outline"}

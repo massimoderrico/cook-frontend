@@ -17,7 +17,6 @@ export const CookbookCard = ({cookbook}: {cookbook: Cookbook}) => {
         <ThemedView invertColors={true}
             style={{
                 alignItems: "center",
-                height: 90,
                 width: 370,
                 borderRadius: 20,
                 flexDirection: "row",
@@ -32,14 +31,18 @@ export const CookbookCard = ({cookbook}: {cookbook: Cookbook}) => {
                 shadowRadius: 10,
                 elevation: 5,
             }}>
-            <ThemedText invertColors={true}
-                style={{ 
-                    fontSize: 25, 
-                    fontWeight: "bold",
-                    margin: 5 
+            <View style={{ width: "70%" }}>
+                <ThemedText invertColors={true}
+                    style={{
+                        fontSize: 25,
+                        fontWeight: "bold",
+                        margin: 5,
+                        flexWrap: "wrap",
+                        textAlign: "left",
                     }}>
-                {cookbook.name}
-            </ThemedText>
+                    {cookbook.name}
+                </ThemedText>
+            </View>
             <View
                 style={{
                     backgroundColor: Colors.primary,
