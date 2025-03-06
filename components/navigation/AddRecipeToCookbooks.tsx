@@ -5,7 +5,7 @@ import { CookbookCardSelection } from "../CookbookCardSelection";
 import { CustomButton } from "../CustomButton";
 import { ThemedText } from "../ThemedText";
 
-export const AddRecipesToCookbooks = ({cookbooks}: {cookbooks: Cookbook[]}) => {
+export const AddRecipeToCookbooks = ({cookbooks}: {cookbooks: Cookbook[]}) => {
     return (
       <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false}>
         <ThemedText style={{
