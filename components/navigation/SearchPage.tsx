@@ -94,9 +94,9 @@ export const SearchPage = ( ) => {
                 }} />
             </ThemedView>
             <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} >
-                {results && results.map((recipe: Recipe) => (
+                {/* {results && results.map((recipe: Recipe) => (
                 <RecipeCard recipe={recipe} key={recipe.id} />
-                ))}
+                ))} */}
             </ThemedScrollView>
         </KeyboardAvoidingView>
     )
