@@ -11,14 +11,31 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
     <ThemedView invertColors={true} 
       style={{ 
         alignItems: 'center',
-        height: 170,
         width: 170,
         borderRadius: 40,
-      }}>
-      <ThemedText invertColors={true} 
-      style={{
         paddingVertical: 10,
-      }}>{recipe.name}</ThemedText>
+        shadowColor: "#000", 
+        shadowOffset: {
+          width: 0,
+          height: 5, 
+        },
+        shadowOpacity: 0.4, 
+        shadowRadius: 10,
+        elevation: 5,
+      }}>
+      <View style={{ width: "100%", alignItems: "center" }}>
+        <ThemedText
+          invertColors={true}
+          style={{
+            textAlign: "center",
+            paddingBottom: 10,
+            flexWrap: "wrap",
+            width: "100%",
+          }}
+        >
+          {recipe.name}
+        </ThemedText>
+      </View>
       {/* replace themed view with image below  */}
       <ThemedView style={{borderRadius: 30, height: 69, width: 147, backgroundColor: "red"}}/> 
       <View style={{
