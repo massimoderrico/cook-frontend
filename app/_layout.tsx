@@ -10,11 +10,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { SessionProvider } from '@/context';
-
-const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql', // Your GraphQL endpoint
-  cache: new InMemoryCache(),
-});
+import client from '@/apolloClient';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

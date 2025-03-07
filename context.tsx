@@ -1,6 +1,8 @@
-import { createContext, useContext, PropsWithChildren } from 'react';
+import { createContext, useContext, PropsWithChildren, useState } from 'react';
 import { useStorageState } from './useStorageState';
 import { useMutation, gql } from '@apollo/client';
+import { router } from 'expo-router';
+import { removeToken, saveEmail, saveId, saveToken, saveUsername } from './storage';
 
 const AuthContext = createContext<{
   signIn: (email: string, username: string, password: string) => Promise<void>;
@@ -9,7 +11,6 @@ const AuthContext = createContext<{
   userId: number | null;
   email: string | null;
   username: string | null;
-  token: string | null;
   isLoading: boolean;
 }>({
   signIn: async () => {},
@@ -18,7 +19,6 @@ const AuthContext = createContext<{
   userId: null,
   email: null,
   username: null,
-  token: null,
   isLoading: false,
 });
 
@@ -47,11 +47,9 @@ const LOGIN = gql`
 `;
 
 export function SessionProvider({ children }: PropsWithChildren) {
-  const [[isLoading, session], setSession] = useStorageState<{ accessToken: string; userId: number; email: string; username: string } | null>("session");
-  
   const [signInMutation, { loading: signInLoading }] = useMutation(SIGNIN);
   const [loginMutation, { loading: loginLoading }] = useMutation(LOGIN);
-
+  const [user, setUser] = useState<{ userId: number; email: string; username: string } | null>(null);
   return (
     <AuthContext.Provider
       value={{
@@ -59,11 +57,11 @@ export function SessionProvider({ children }: PropsWithChildren) {
           try {
             const { data } = await signInMutation({ variables: { email, username, password } });
             if (data?.signup) {
-              setSession({
-                accessToken: data.signup.accessToken,
-                userId: data.signup.userId,
-                email: data.signup.email,
-                username: username 
+              saveToken(data.signup.accessToken)
+              setUser({
+                userId: data.login.userId,
+                email: data.login.email,
+                username: data.login.username,
               });
             } else {
               throw new Error("No session received");
@@ -76,8 +74,8 @@ export function SessionProvider({ children }: PropsWithChildren) {
           try {
             const { data } = await loginMutation({ variables: { email, password } });
             if (data?.login) {
-              setSession({
-                accessToken: data.login.accessToken,
+              saveToken(data.login.accessToken)
+              setUser({
                 userId: data.login.userId,
                 email: data.login.email,
                 username: data.login.username,
@@ -90,13 +88,14 @@ export function SessionProvider({ children }: PropsWithChildren) {
           }
         },
         signOut: () => {
-          setSession(null);
+          removeToken()
+          setUser(null);
+          router.replace('/sign-in');
         },
-        userId: session?.userId ?? null,
-        email: session?.email ?? null,
-        username: session?.username ?? null,
-        token: session?.accessToken ?? null,
-        isLoading: isLoading || signInLoading || loginLoading,
+        userId: user?.userId ?? null,
+        email: user?.email ?? null,
+        username: user?.username ?? null,
+        isLoading: signInLoading || loginLoading,
       }}
     >
       {children}

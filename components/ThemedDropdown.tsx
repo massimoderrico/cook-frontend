@@ -1,8 +1,7 @@
 import { Dropdown } from 'react-native-element-dropdown';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { TextProps, TextStyle, View } from 'react-native';
+import { TextStyle } from 'react-native';
 import { DropdownProps } from 'react-native-element-dropdown/lib/typescript/components/Dropdown/model';
-import { ThemedViewProps } from './ThemedView';
 import { Colors } from '@/constants/Colors';
 import { Fonts } from '@/constants/Fonts';
 
