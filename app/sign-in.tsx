@@ -11,10 +11,6 @@ import { useSession } from "@/context";
 import { useRouter } from "expo-router";
 import { Fonts } from "@/constants/Fonts";
 
-
-
-
-
 export default function SignIn() {
     const { login, signIn } = useSession();
     const {height, width} = useWindowDimensions();
