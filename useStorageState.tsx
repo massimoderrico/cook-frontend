@@ -4,7 +4,6 @@ import { Platform } from 'react-native';
 
 type UseStateHook<T> = [[boolean, T | null], (value: T | null) => void];
 
-
 function useAsyncState<T>(
   initialValue: [boolean, T | null] = [true, null],
 ): UseStateHook<T> {
@@ -42,7 +41,7 @@ export function useStorageState<T>(key: string): [[boolean, T | null], (value: T
       try {
         const storedValue = await SecureStore.getItemAsync(key);
         if (storedValue) {
-          setState(JSON.parse(storedValue)); // ✅ Parse stored JSON
+          setState(JSON.parse(storedValue)); 
         }
       } catch (e) {
         console.error('Error reading storage:', e);
@@ -56,7 +55,7 @@ export function useStorageState<T>(key: string): [[boolean, T | null], (value: T
       if (value === null) {
         await SecureStore.deleteItemAsync(key);
       } else {
-        await SecureStore.setItemAsync(key, JSON.stringify(value)); // ✅ Store as JSON
+        await SecureStore.setItemAsync(key, JSON.stringify(value)); 
       }
     },
     [key]

@@ -1,22 +1,69 @@
 import { KeyboardAvoidingView } from "react-native"
 import { ThemedScrollView } from "../ThemedScrollView"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { ThemedTextInput } from "../ThemedTextInput"
 import { Colors } from "@/constants/Colors"
 import { ThemedView } from "../ThemedView"
 import { ThemedText } from "../ThemedText"
 import { ThemedDropdown } from "../ThemedDropdown"
-import { ContentType } from "@/types/graphql"
+import { ContentType, Recipe } from "@/types/graphql"
 import { CustomButton } from "../CustomButton"
+import { gql, useLazyQuery } from "@apollo/client"
+import { RecipeCard } from "../RecipeCard"
+
+
+const SEARCH_COOKBOOK = gql`
+  query SearchCookbook($query: String!) {
+    searchCookbook(query: $query) {
+      id
+      name
+      description
+    }
+  }
+`;
+
+const SEARCH_RECIPES = gql`
+  query SearchRecipes($query: String!) {
+    searchRecipes(query: $query) {
+      id
+      name
+      description
+      ingredients
+      directions
+      prepTime
+      cookTime
+      rating
+      image
+    }
+  }
+`;
+
 
 export const SearchPage = ( ) => {
     const [searchQuery, onEnterSearchQuery] = useState<string>()
     const [contentType, setContentType] = useState<string>()
+    const [results, setResults] = useState<any[]>()
+    const [searchCookbooks, {loading: cookbookLoading, data: cookbookData, error: cookbookError}] = useLazyQuery(SEARCH_COOKBOOK)
+    const [searchRecipes, {loading: recipeLoading, data: recipeData, error: recipeError}] = useLazyQuery(SEARCH_RECIPES)
+
+
+    const searchContent = () => {
+        if (contentType === "Cookbook") {
+            searchCookbooks({ variables: { query: searchQuery } })
+            setResults(cookbookData?.searchCookbook)
+            console.log(cookbookData?.searchCookbook)
+        } else if (contentType === "Recipe") {
+            searchRecipes({ variables: { query: searchQuery } })
+            setResults(recipeData?.searchRecipe)
+            console.log(recipeData?.searchRecipes)
+        }
+    }
 
     return (
         <KeyboardAvoidingView behavior="position" >
-            <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} >
+            <ThemedView style={{paddingHorizontal: 30}} >
                 <ThemedTextInput 
+                iconProps={{name: "search", color: Colors.primary}}
                 placeholder="Search Query"
                 value={searchQuery}
                 onChangeText={onEnterSearchQuery}
@@ -24,7 +71,6 @@ export const SearchPage = ( ) => {
                     marginTop: 20,
                     borderWidth: 2,
                     borderColor: Colors.primary,
-                    paddingLeft: 10
                 }} 
                 />
                 <ThemedView style= {{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
@@ -44,7 +90,17 @@ export const SearchPage = ( ) => {
                         maxHeight={225}
                     />
                 </ThemedView>
-                <CustomButton text="Search" bgProps={{style: {marginVertical: 30}, onPress: () => console.log(searchQuery, contentType)}} />
+                <CustomButton 
+                text="Search" 
+                bgProps={{style: {marginVertical: 30}, 
+                onPress: () => {searchContent()
+                    
+                }}} />
+            </ThemedView>
+            <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} >
+                {/* {results && results.map((recipe: Recipe) => (
+                <RecipeCard recipe={recipe} key={recipe.id} />
+                ))} */}
             </ThemedScrollView>
         </KeyboardAvoidingView>
     )
