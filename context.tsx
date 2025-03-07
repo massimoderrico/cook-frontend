@@ -1,4 +1,4 @@
-import { createContext, useContext, PropsWithChildren } from 'react';
+import { createContext, useContext, PropsWithChildren, useState } from 'react';
 import { useStorageState } from './useStorageState';
 import { useMutation, gql } from '@apollo/client';
 import { router } from 'expo-router';
@@ -8,11 +8,17 @@ const AuthContext = createContext<{
   signIn: (email: string, username: string, password: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   signOut: () => void;
+  userId: number | null;
+  email: string | null;
+  username: string | null;
   isLoading: boolean;
 }>({
   signIn: async () => {},
   login: async () => {},
   signOut: () => {},
+  userId: null,
+  email: null,
+  username: null,
   isLoading: false,
 });
 
@@ -43,7 +49,7 @@ const LOGIN = gql`
 export function SessionProvider({ children }: PropsWithChildren) {
   const [signInMutation, { loading: signInLoading }] = useMutation(SIGNIN);
   const [loginMutation, { loading: loginLoading }] = useMutation(LOGIN);
-
+  const [user, setUser] = useState<{ userId: number; email: string; username: string } | null>(null);
   return (
     <AuthContext.Provider
       value={{
@@ -52,9 +58,11 @@ export function SessionProvider({ children }: PropsWithChildren) {
             const { data } = await signInMutation({ variables: { email, username, password } });
             if (data?.signup) {
               saveToken(data.signup.accessToken)
-              saveId(data.signup.userId)
-              saveEmail(data.signup.email)
-              saveUsername(data.signup.username)
+              setUser({
+                userId: data.login.userId,
+                email: data.login.email,
+                username: data.login.username,
+              });
             } else {
               throw new Error("No session received");
             }
@@ -67,9 +75,11 @@ export function SessionProvider({ children }: PropsWithChildren) {
             const { data } = await loginMutation({ variables: { email, password } });
             if (data?.login) {
               saveToken(data.login.accessToken)
-              saveId(data.login.userId)
-              saveEmail(data.login.email)
-              saveUsername(data.login.username)
+              setUser({
+                userId: data.login.userId,
+                email: data.login.email,
+                username: data.login.username,
+              });
             } else {
               throw new Error("No session received");
             }
@@ -79,8 +89,12 @@ export function SessionProvider({ children }: PropsWithChildren) {
         },
         signOut: () => {
           removeToken()
+          setUser(null);
           router.replace('/sign-in');
         },
+        userId: user?.userId ?? null,
+        email: user?.email ?? null,
+        username: user?.username ?? null,
         isLoading: signInLoading || loginLoading,
       }}
     >

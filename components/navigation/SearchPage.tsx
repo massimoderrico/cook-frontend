@@ -10,6 +10,7 @@ import { ContentType, Recipe } from "@/types/graphql"
 import { CustomButton } from "../CustomButton"
 import { gql, useLazyQuery } from "@apollo/client"
 import { RecipeCard } from "../RecipeCard"
+import { useSession } from "@/context"
 
 
 const SEARCH_COOKBOOK = gql`
@@ -42,19 +43,15 @@ const SEARCH_RECIPES = gql`
 export const SearchPage = ( ) => {
     const [searchQuery, onEnterSearchQuery] = useState<string>()
     const [contentType, setContentType] = useState<string>()
-    const [results, setResults] = useState<any[]>()
     const [searchCookbooks, {loading: cookbookLoading, data: cookbookData, error: cookbookError}] = useLazyQuery(SEARCH_COOKBOOK)
     const [searchRecipes, {loading: recipeLoading, data: recipeData, error: recipeError}] = useLazyQuery(SEARCH_RECIPES)
-
 
     const searchContent = () => {
         if (contentType === "Cookbook") {
             searchCookbooks({ variables: { query: searchQuery } })
-            setResults(cookbookData?.searchCookbook)
             console.log(cookbookData?.searchCookbook)
         } else if (contentType === "Recipe") {
             searchRecipes({ variables: { query: searchQuery } })
-            setResults(recipeData?.searchRecipe)
             console.log(recipeData?.searchRecipes)
         }
     }
@@ -93,14 +90,13 @@ export const SearchPage = ( ) => {
                 <CustomButton 
                 text="Search" 
                 bgProps={{style: {marginVertical: 30}, 
-                onPress: () => {searchContent()
-                    
-                }}} />
+                onPress: () => {searchContent()}
+                }} />
             </ThemedView>
             <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} >
-                {/* {results && results.map((recipe: Recipe) => (
+                {results && results.map((recipe: Recipe) => (
                 <RecipeCard recipe={recipe} key={recipe.id} />
-                ))} */}
+                ))}
             </ThemedScrollView>
         </KeyboardAvoidingView>
     )
