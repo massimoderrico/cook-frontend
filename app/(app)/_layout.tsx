@@ -16,18 +16,20 @@ export default function AppLayout() {
         tabBarActiveTintColor: Colors.primary,
         headerShown: false,
         tabBarShowLabel: false,
+        tabBarIconStyle: {width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'},
         tabBarStyle: {
           justifyContent: 'center',
+          alignItems: 'center',
+          position: 'absolute',
           backgroundColor: useThemeColor('background'),
           borderTopColor: useThemeColor('text'),
           height: 90,
-          paddingTop: 12
+          paddingTop: 10
         },
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: undefined,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'home' : 'home-outline'} color={focused ? color: useThemeColor("text")} />
           ),
@@ -36,25 +38,22 @@ export default function AppLayout() {
       <Tabs.Screen
         name="search"
         options={{
-          title: undefined,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'search' : 'search-outline'} color={focused ? color: useThemeColor("text")} />
           ),
         }}
       />
       <Tabs.Screen
-        name="add-recipe"
+        name="create-recipe"
         options={{
-          title: undefined,
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={"add-circle"} color={focused ? color: useThemeColor("text")} />
+            <TabBarIcon name={"add-circle"} size={40} color={focused ? color: useThemeColor("text")} />
           ),
         }}
       />
       <Tabs.Screen
         name="cookbooks"
         options={{
-          title: undefined,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'book' : 'book-outline'} color={focused ? color: useThemeColor("text")} />
           ),
@@ -63,7 +62,6 @@ export default function AppLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: undefined,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'person' : 'person-outline'} color={focused ? color: useThemeColor("text")} />
           ),

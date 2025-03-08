@@ -8,18 +8,21 @@ import { CustomButton } from "@/components/CustomButton";
 import { ThemedView } from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function Profile(){
     const backgroundColor = useThemeColor("background")
+    const textColor = useThemeColor("text")
     const session = useSession()
 
     return (
         <SafeAreaView
-        style={{backgroundColor:backgroundColor}}>
+        style={{backgroundColor:backgroundColor, flex: 1, alignItems: "center"}}>
             <ThemedText>Profile</ThemedText>
             {/* Profile Picture goes here */}
             <View style={{height: 160, width: 160, backgroundColor: "red", borderRadius: 80}}>
-                <TouchableOpacity style={{height: 50, width: 50, borderRadius: 25, backgroundColor: Colors.primary , position: "absolute", bottom: 0, right: 0}}>
+                <TouchableOpacity style={{height: 50, width: 50, borderRadius: 25, backgroundColor: Colors.primary , position: "absolute", bottom: 0, right: 0, justifyContent: "center", alignItems: "center"}}>
+                <Ionicons name="camera" size={24} color={textColor}/>
                 </TouchableOpacity>
             </View>
             <ThemedText>{session.username}</ThemedText>
@@ -31,8 +34,12 @@ export default function Profile(){
             {/* <TouchableOpacity onPress={() => {console.log(session.userId)}}>
                 <ThemedText>UserId</ThemedText>
             </TouchableOpacity> */}
-            <TouchableOpacity style={{marginTop: 20}}>
-                <ThemedText>Settings</ThemedText>
+            <TouchableOpacity style={{marginTop: 20, flexDirection: "row", alignItems: "center"}}>
+                <View style={{height: 40, width: 40, borderRadius: 25, backgroundColor: Colors.primary, justifyContent: "center", alignItems: "center"}}>
+                    <Ionicons name="cog" size={24} color={textColor}/>
+                </View>
+                <ThemedText style={{paddingLeft: 10}}>Settings</ThemedText>
+                <Ionicons name="chevron-forward" size={24} color={textColor}/>
             </TouchableOpacity>
             <TouchableOpacity style={{marginTop: 20}}>
                 <ThemedText>Information</ThemedText>
