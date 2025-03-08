@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import { ThemedScrollView } from "../ThemedScrollView";
-import { ThemedTextInput } from "../ThemedTextInput";
-import { Colors } from "@/constants/Colors";
-import { ThemedView } from "../ThemedView";
-import { ThemedText } from "../ThemedText";
-import { InputAccessoryView, KeyboardAvoidingView, SafeAreaView, Switch } from "react-native";
+import { ThemedText } from "@/components/ThemedText";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { CustomButton } from "../CustomButton";
-import { ThemedAdditveTextInput } from "../ThemedAdditiveTextInput";
-import { ThemedIngredientAdditveTextInput } from "../ThemedIngredientAdditiveTextInput";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-export const CreateRecipePage = ( ) => {
+import { KeyboardAvoidingView, Switch } from "react-native"
+import { useState } from "react"
+import { Colors } from "@/constants/Colors"
+import { CustomButton } from "@/components/CustomButton"
+import { ThemedIngredientAdditveTextInput } from "@/components/ThemedIngredientAdditiveTextInput";
+import { ThemedAdditveTextInput } from "@/components/ThemedAdditiveTextInput";
+import { ThemedScrollView } from "@/components/ThemedScrollView";
+import { ThemedTextInput } from "@/components/ThemedTextInput";
+import { ThemedView } from "@/components/ThemedView";
+
+export default function CreateRecipe () {
     const [recipeName, onChangeRecipeName ] = useState<string>()
     const [description, onChangeDescription ] = useState<string>()
     const [prepTime, onChangePrepTime ] = useState<string>()
@@ -20,13 +21,15 @@ export const CreateRecipePage = ( ) => {
     const [directions, setDirections] = useState<string[]>([])
 
     return (
-        <KeyboardAvoidingView behavior="position" >
+        <SafeAreaView style={{flex: 1, backgroundColor: useThemeColor('background') }}>
+        <ThemedText  style={{ padding: 20, fontSize: 30, fontWeight: "bold", textAlign: 'center'}}> Create Recipe</ThemedText>
+        <KeyboardAvoidingView behavior="position" style={{paddingBottom: 80}}>
         <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} >
             <ThemedTextInput 
             placeholder="Recipe Name" 
             value={recipeName} 
             onChangeText={onChangeRecipeName}
-            style={{marginTop: 20,
+            style={{
                 borderWidth: 2,
                 borderColor: Colors.primary,
                 paddingLeft: 10
@@ -107,16 +110,11 @@ export const CreateRecipePage = ( ) => {
             <ThemedIngredientAdditveTextInput inputArray={ingredients} setInputArray={setIngredients}/>
             <ThemedText type= {"subtitle"} fontWeight={700} style={{marginTop: 30}}>
                 Directions
-            </ThemedText>
-            
+            </ThemedText> 
             <ThemedAdditveTextInput textInputProps={{placeholder: "Add vanilla to cake batter"}} inputArray={directions} setInputArray={setDirections} numbered numberedPrefix="Step "/>
             <CustomButton text="Save Recipe" bgProps={{style: {marginVertical: 30}, onPress: () => console.log(ingredients)}} />
-            
         </ThemedScrollView>
         </KeyboardAvoidingView>
+        </SafeAreaView>
     )
 }
-
-
-
-
