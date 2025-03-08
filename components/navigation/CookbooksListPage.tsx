@@ -4,8 +4,15 @@ import { CookbookCard } from "@/components/CookbookCard";
 import { Cookbook } from "@/types/graphql";
 import { ThemedView } from "../ThemedView";
 import { CustomButton } from "../CustomButton";
+import { useRouter } from "expo-router";
 
 export const CookbooksListPage = ({cookbooks}: {cookbooks: Cookbook[]}) => {
+    const router = useRouter();
+
+    const handleCreateCookbook = () => {
+      router.push("/(app)/cookbooks/create-cookbook");
+    };
+
     return (
       <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false}>
         <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -15,7 +22,7 @@ export const CookbooksListPage = ({cookbooks}: {cookbooks: Cookbook[]}) => {
                 </ThemedView>
             ))}
         </ThemedView>
-        <CustomButton text="Create New Cookbook" bgProps={{style: {marginVertical: 30}, onPress: () => console.log(cookbooks.length)}} />
+        <CustomButton text="Create New Cookbook" bgProps={{style: {marginVertical: 30}, onPress: handleCreateCookbook}} />
       </ThemedScrollView>
     );
   };

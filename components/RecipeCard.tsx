@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
 import { Recipe } from "../types/graphql";
-import { View, Text, useColorScheme } from "react-native";
+import { View, Text, useColorScheme, Image } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 
-export const RecipeCard = ({recipe}: {recipe: Recipe}) => { 
+export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
+  // const image = recipe.image? recipe.image : require('../assets/images/icon.png');
+  
   return (
     <ThemedView invertColors={true} 
       style={{ 
@@ -38,6 +40,7 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
       </View>
       {/* replace themed view with image below  */}
       <ThemedView style={{borderRadius: 30, height: 69, width: 147, backgroundColor: "red"}}/> 
+      {/* <Image source={{uri: require('../assets/images/icon.png')}} style={{borderRadius: 30, height: 69, width: 147}}/>  */}
       <View style={{
         flexDirection: 'row', 
         justifyContent: 'space-evenly',

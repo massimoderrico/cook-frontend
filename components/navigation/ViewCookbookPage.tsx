@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ThemedScrollView } from "../ThemedScrollView";
-import { CookbookCard } from "@/components/CookbookCard";
 import { Cookbook } from "@/types/graphql";
 import { ThemedView } from "../ThemedView";
 import { CustomButton } from "../CustomButton";
