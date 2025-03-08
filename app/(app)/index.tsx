@@ -7,7 +7,7 @@ export default function Home(){
 
     return (
         <SafeAreaView
-        style={{backgroundColor:backgroundColor}}>
+        style={{backgroundColor:backgroundColor, flex: 1}}>
             <ThemedText>Home</ThemedText>
         </SafeAreaView>
     )

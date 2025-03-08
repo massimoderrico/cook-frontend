@@ -1,19 +1,26 @@
 import React from "react";
 import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { Cookbook } from "@/types/graphql";
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
+import { useSession } from "@/context";
 
 export const CookbookCard = ({cookbook}: {cookbook: Cookbook}) => {
-    //TODO: modify to add navigation to inside cookbook page
-    // const navigation = useNavigation();
-    // const handlePress = () => {
-    //   navigation.navigate("CookbookDetail", { cookbookId: cookbook.id });
-    // };
+    const router = useRouter();
+    const { setSelectedCookbook } = useSession();  // Access the context to set the cookbook
+
+    const handlePress = () => {
+        setSelectedCookbook(cookbook);
+        router.push({
+            pathname: "/(app)/cookbooks/view-cookbook",
+            params: {id: cookbook.id},
+        });
+    };
 
     return (
+        <TouchableOpacity onPress={handlePress}>
         <ThemedView invertColors={true}
             style={{
                 alignItems: "center",
@@ -57,5 +64,6 @@ export const CookbookCard = ({cookbook}: {cookbook: Cookbook}) => {
                 </ThemedText>
             </View>
         </ThemedView>
+        </TouchableOpacity>
     )
 }

@@ -3,6 +3,7 @@ import { useStorageState } from './useStorageState';
 import { useMutation, gql } from '@apollo/client';
 import { router } from 'expo-router';
 import { removeToken, saveEmail, saveId, saveToken, saveUsername } from './storage';
+import { Cookbook, Recipe } from './types/graphql';
 
 const AuthContext = createContext<{
   signIn: (email: string, username: string, password: string) => Promise<void>;
@@ -12,6 +13,10 @@ const AuthContext = createContext<{
   email: string | null;
   username: string | null;
   isLoading: boolean;
+  selectedCookbook: Cookbook | null;
+  setSelectedCookbook: (cookbook: Cookbook) => void;
+  selectedRecipe: Recipe | null;
+  setSelectedRecipe: (recipe:Recipe) => void;
 }>({
   signIn: async () => {},
   login: async () => {},
@@ -20,6 +25,10 @@ const AuthContext = createContext<{
   email: null,
   username: null,
   isLoading: false,
+  selectedCookbook: null,
+  setSelectedCookbook: () => {},
+  selectedRecipe: null,
+  setSelectedRecipe: () => {},
 });
 
 export function useSession() {
@@ -50,6 +59,8 @@ export function SessionProvider({ children }: PropsWithChildren) {
   const [signInMutation, { loading: signInLoading }] = useMutation(SIGNIN);
   const [loginMutation, { loading: loginLoading }] = useMutation(LOGIN);
   const [user, setUser] = useState<{ userId: number; email: string; username: string } | null>(null);
+  const [selectedCookbook, setSelectedCookbook] = useState<Cookbook | null>(null);
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
   return (
     <AuthContext.Provider
       value={{
@@ -96,6 +107,10 @@ export function SessionProvider({ children }: PropsWithChildren) {
         email: user?.email ?? null,
         username: user?.username ?? null,
         isLoading: signInLoading || loginLoading,
+        selectedCookbook, 
+        setSelectedCookbook,
+        selectedRecipe, 
+        setSelectedRecipe,
       }}
     >
       {children}
