@@ -15,14 +15,21 @@ export default function AppLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors.primary,
         headerShown: false,
-        tabBarShowLabel: false
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          justifyContent: 'center',
+          backgroundColor: useThemeColor('background'),
+          borderTopColor: useThemeColor('text'),
+          height: 90,
+          paddingTop: 12
+        },
       }}>
       <Tabs.Screen
         name="index"
         options={{
           title: undefined,
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={focused ? color: useThemeColor("text")} />
           ),
         }}
       />
@@ -31,7 +38,7 @@ export default function AppLayout() {
         options={{
           title: undefined,
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} />
+            <TabBarIcon name={focused ? 'search' : 'search-outline'} color={focused ? color: useThemeColor("text")} />
           ),
         }}
       />
@@ -40,7 +47,7 @@ export default function AppLayout() {
         options={{
           title: undefined,
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'add-circle' : 'add-circle-outline'} color={color} />
+            <TabBarIcon name={"add-circle"} color={focused ? color: useThemeColor("text")} />
           ),
         }}
       />
@@ -49,7 +56,7 @@ export default function AppLayout() {
         options={{
           title: undefined,
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'book' : 'book-outline'} color={color} />
+            <TabBarIcon name={focused ? 'book' : 'book-outline'} color={focused ? color: useThemeColor("text")} />
           ),
         }}
       />
@@ -58,7 +65,7 @@ export default function AppLayout() {
         options={{
           title: undefined,
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
+            <TabBarIcon name={focused ? 'person' : 'person-outline'} color={focused ? color: useThemeColor("text")} />
           ),
         }}
       />
