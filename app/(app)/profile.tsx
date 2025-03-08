@@ -17,6 +17,10 @@ export default function Profile(){
                 session.signOut()}}>
                 <ThemedText>Signout</ThemedText>
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+                console.log(session.userId)}}>
+                <ThemedText>UserId</ThemedText>
+            </TouchableOpacity>
         </SafeAreaView>
     )
 }
