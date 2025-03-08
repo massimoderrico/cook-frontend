@@ -7,11 +7,53 @@ import { ThemedText } from "../ThemedText";
 import { KeyboardAvoidingView, Switch } from "react-native";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { CustomButton } from "../CustomButton";
+import { gql, useMutation } from '@apollo/client';
+import { useRouter } from "expo-router";
+import { useSession } from "@/context";
+
+const CREATE_COOKBOOK = gql`
+    mutation CreateCookbook($data: CookbookCreateInput!) {
+        createCookbook(data: $data) {
+            id
+            name
+            description
+        }
+    }
+`;
 
 export const CreateCookbookPage = ( ) => {
-    const [cookbookName, onChangeCookbookName ] = useState<string>()
-    const [description, onChangeDescription ] = useState<string>()
-    const [isPublic, setIsPublic ] = useState<boolean>(false)
+    const [cookbookName, onChangeCookbookName ] = useState<string>();
+    const [description, onChangeDescription ] = useState<string>();
+    const [isPublic, setIsPublic ] = useState<boolean>(false);
+
+    const { userId } = useSession();
+    const router = useRouter();
+    const [createCookbook, { loading, data, error }] = useMutation(CREATE_COOKBOOK);
+
+    const handleSaveCookbook = async () => { 
+        if (!userId) return;
+        try {
+          const { data } = await createCookbook({
+            variables: {
+              data: {
+                name: cookbookName,
+                description,
+                isPublic,
+                user: { connect: { id: userId } },
+              },
+            },
+          });
+          console.log("Cookbook created:", data);
+          if (data?.createCookbook) {
+            router.push({
+                pathname: "/(app)/cookbooks/add-recipes",
+                params: {id: data.id},
+            });
+          }
+        } catch (err) {
+          console.error("Error creating cookbook:", err);
+        }
+    };
 
     return (
         <KeyboardAvoidingView behavior="position" >
@@ -53,7 +95,7 @@ export const CreateCookbookPage = ( ) => {
                     />
                 </ThemedView>       
             </ThemedView>    
-            <CustomButton text="Save Cookbook" bgProps={{style: {marginVertical: 30}, onPress: () => console.log(cookbookName)}} />
+            <CustomButton text="Save Cookbook" bgProps={{style: {marginVertical: 30}, onPress: () => {handleSaveCookbook()}}} />
         </ThemedScrollView>
         </KeyboardAvoidingView>
     )

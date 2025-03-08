@@ -45,7 +45,7 @@ export default function AppLayout() {
         }}
       />
       <Tabs.Screen
-        name="recipes"
+        name="cookbooks"
         options={{
           title: undefined,
           tabBarIcon: ({ color, focused }) => (
