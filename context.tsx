@@ -1,9 +1,10 @@
 import { createContext, useContext, PropsWithChildren, useState } from 'react';
 import { useStorageState } from './useStorageState';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation, gql, ApolloError } from '@apollo/client';
 import { router } from 'expo-router';
 import { removeToken, saveEmail, saveId, saveToken, saveUsername } from './storage';
 import { Cookbook, Recipe } from './types/graphql';
+import { getErrorMessage } from './errorHandler';
 
 const AuthContext = createContext<{
   signIn: (email: string, username: string, password: string) => Promise<void>;
@@ -70,15 +71,15 @@ export function SessionProvider({ children }: PropsWithChildren) {
             if (data?.signup) {
               saveToken(data.signup.accessToken)
               setUser({
-                userId: data.login.userId,
-                email: data.login.email,
-                username: data.login.username,
+                userId: data.signup.userId,
+                email: data.signup.email,
+                username: data.signup.username,
               });
             } else {
               throw new Error("No session received");
             }
           } catch (err) {
-            console.error("Sign-in error:", err);
+            throw getErrorMessage(err);
           }
         },
         login: async (email, password) => {
@@ -95,7 +96,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
               throw new Error("No session received");
             }
           } catch (err) {
-            console.error("Login error:", err);
+            throw getErrorMessage(err);
           }
         },
         signOut: () => {
