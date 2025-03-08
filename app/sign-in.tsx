@@ -29,7 +29,7 @@ export default function SignIn() {
                 Alert.alert('Success', 'You are logged in!');
                 router.replace('/(app)');
             } catch (error) {
-                Alert.alert('Login Failed', 'Invalid credential');
+                setDisplayError(error?.toString() ?? "Login unsuccessful");
             }
       }}
 
@@ -40,7 +40,7 @@ export default function SignIn() {
                 Alert.alert('Success', 'Account created! You are now logged in.');
                 router.replace('/(app)'); 
             } catch (error) {
-                Alert.alert('Sign-Up Failed', 'Error creating account. Please try again.');
+                setDisplayError(error?.toString() ?? "Sign up unsuccessful");
             }
       }}
 
@@ -90,10 +90,13 @@ export default function SignIn() {
                 <ThemedView style={{ justifyContent: 'space-evenly', alignItems: "center" }}>
                     <ThemedTextInput style={{ width: width/1.25, marginTop: 25}} placeholder="Email Address" value={email} onChangeText={setEmail}/>
                     <ThemedTextInput secureTextEntry style={{ width: width/1.25, marginTop: 25}} placeholder="Password" value={password} onChangeText={setPassword}/>
+                    <Text style={{color: Colors.error, fontSize: 16, marginTop: 10, fontFamily: Fonts(600) }}>
+                        { displayError? displayError : ""}
+                    </Text>
                     <CustomButton text="Login" 
                         bgProps={{
                             onPress: () => handleDisplayError(),
-                            style: {width: width/1.75, marginTop: 30 }}} />
+                            style: {width: width/1.75, marginTop: 10 }}} />
                 </ThemedView>
                 :
                 <ThemedView style={{ justifyContent: 'space-evenly', alignItems: "center" }}>
