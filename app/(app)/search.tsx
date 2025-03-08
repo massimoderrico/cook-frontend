@@ -8,7 +8,7 @@ export default function Search(){
 
     return (
         <SafeAreaView
-        style={{backgroundColor:backgroundColor}}>
+        style={{backgroundColor:backgroundColor, flex: 1}}>
             <SearchPage/>
         </SafeAreaView>
     )
