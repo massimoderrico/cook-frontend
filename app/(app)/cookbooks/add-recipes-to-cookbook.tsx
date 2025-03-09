@@ -85,7 +85,7 @@ export default function AddRecipesToCookbook(){
     return (
         <SafeAreaView style={{backgroundColor:backgroundColor, flex: 1}}>
             <ThemedText style={{ padding: 20, fontSize: 30, fontWeight: "bold", textAlign: 'center'}}>Add Recipes to Cookbook</ThemedText>
-            <ThemedScrollView style={{paddingHorizontal: 20}} showsVerticalScrollIndicator={false}>
+            <ThemedScrollView style={{paddingHorizontal: 20}} showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}>
             <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
                 <ThemedView style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', width: '100%'}}>
                     {userRecipeData?.getUserRecipes.map((recipe: Recipe) => (

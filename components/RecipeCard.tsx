@@ -2,16 +2,29 @@ import React, { useEffect, useState } from "react";
 import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
 import { Recipe } from "../types/graphql";
-import { View, Text, useColorScheme, Image } from "react-native";
+import { View, Text, useColorScheme, Image, TouchableOpacity } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { useRouter } from "expo-router";
+import { useSession } from "@/context";
 
 
 export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
   // const image = recipe.image? recipe.image : require('../assets/images/icon.png');
-  
+  const router = useRouter();
+  const { setSelectedRecipe } = useSession();
+
+  const handlePress = () => {
+    setSelectedRecipe(recipe);
+    router.push({
+        pathname: "/",
+        params: {id: recipe.id},
+    });
+  };
+
   return (
+    <TouchableOpacity onPress={handlePress}>
     <ThemedView invertColors={true} 
       style={{ 
         alignItems: 'center',
@@ -81,5 +94,6 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
         </View>
       </View>
     </ThemedView>
+    </TouchableOpacity>
   );
 }

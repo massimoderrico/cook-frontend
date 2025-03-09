@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/ThemedText";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { KeyboardAvoidingView, Switch } from "react-native"
+import { KeyboardAvoidingView, Platform, Switch } from "react-native"
 import { useState } from "react"
 import { Colors } from "@/constants/Colors"
 import { CustomButton } from "@/components/CustomButton"
@@ -10,6 +10,19 @@ import { ThemedAdditveTextInput } from "@/components/ThemedAdditiveTextInput";
 import { ThemedScrollView } from "@/components/ThemedScrollView";
 import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { ThemedView } from "@/components/ThemedView";
+import { useSession } from "@/context";
+import { useRouter } from "expo-router";
+import { gql, useMutation } from "@apollo/client";
+
+export const CREATE_RECIPE = gql`
+  mutation CreateRecipe($data: RecipeCreateInput!) {
+    createRecipe(data: $data) {
+      id
+      name
+      description
+    }
+  }
+`;
 
 export default function CreateRecipe () {
     const [recipeName, onChangeRecipeName ] = useState<string>()
@@ -20,11 +33,45 @@ export default function CreateRecipe () {
     const [ingredients, setIngredients] = useState<string[]>([])
     const [directions, setDirections] = useState<string[]>([])
 
+    const { userId } = useSession();
+    const router = useRouter();
+    const [createRecipe, { loading, data, error }] = useMutation(CREATE_RECIPE);
+
+    const handleSaveRecipe = async () => { 
+        if (!userId) return;
+        try {
+          const { data } = await createRecipe({
+            variables: {
+              data: {
+                name: recipeName,
+                description,
+                prepTime: prepTime ? parseInt(prepTime, 10) : null, 
+                cookTime: cookTime ? parseInt(cookTime, 10) : null,
+                isPublic,
+                ingredients: { set: ingredients ?? [] },
+                directions: { set: directions ?? [] },
+                user: { connect: { id: userId } },
+              },
+            },
+          });
+          console.log("Recipe created:", data);
+          if (data?.createRecipe) {
+            router.push({
+                pathname: "/(app)/create-recipe/add-recipe-to-cookbooks",
+                params: {id: data?.createRecipe.id},
+            });
+          }
+          } catch (err) {
+            console.error("Error creating recipe:", err);
+        }
+    };
+
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: useThemeColor('background') }}>
         <ThemedText  style={{ padding: 20, fontSize: 30, fontWeight: "bold", textAlign: 'center'}}> Create Recipe</ThemedText>
-        <KeyboardAvoidingView behavior="position" style={{paddingBottom: 80}}>
-        <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} >
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={20} style={{flex: 1}}>
+        <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled"
+      contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }} >
             <ThemedTextInput 
             placeholder="Recipe Name" 
             value={recipeName} 
@@ -58,6 +105,7 @@ export default function CreateRecipe () {
                         placeholder="30 mins" 
                         value={prepTime} 
                         onChangeText={onChangePrepTime} 
+                        keyboardType="numeric"
                         style={{
                             paddingLeft: 10,
                             paddingHorizontal: 10,
@@ -78,7 +126,8 @@ export default function CreateRecipe () {
                     <ThemedTextInput 
                         placeholder="30 mins" 
                         value={cookTime} 
-                        onChangeText={onChangeCookTime} 
+                        onChangeText={onChangeCookTime}
+                        keyboardType="numeric" 
                         style={{
                             paddingLeft: 10,
                             paddingHorizontal: 10,
@@ -112,7 +161,7 @@ export default function CreateRecipe () {
                 Directions
             </ThemedText> 
             <ThemedAdditveTextInput textInputProps={{placeholder: "Add vanilla to cake batter"}} inputArray={directions} setInputArray={setDirections} numbered numberedPrefix="Step "/>
-            <CustomButton text="Save Recipe" bgProps={{style: {marginVertical: 30}, onPress: () => console.log(ingredients)}} />
+            <CustomButton text="Save Recipe" bgProps={{style: {marginVertical: 30}, onPress: handleSaveRecipe}} />
         </ThemedScrollView>
         </KeyboardAvoidingView>
         </SafeAreaView>

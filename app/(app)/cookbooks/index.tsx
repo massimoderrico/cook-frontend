@@ -54,7 +54,7 @@ export default function Cookbooks(){
     return (
         <SafeAreaView style={{backgroundColor:backgroundColor, flex: 1}}>
             <ThemedText style={{ padding: 20, fontSize: 30, fontWeight: "bold", textAlign: 'center'}}>My Cookbooks</ThemedText>
-            <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false}>
+            <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}>
                 <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
                     {data?.getUserCookbooks.map((cookbook: Cookbook) => (
                         <ThemedView key={cookbook.id} style={{ marginBottom: 10 }}>
