@@ -5,6 +5,8 @@ import { Recipe } from "../types/graphql";
 import { View, Text, useColorScheme, Image } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
+import { useThemeColor } from "@/hooks/useThemeColor";
+
 
 export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
   // const image = recipe.image? recipe.image : require('../assets/images/icon.png');
@@ -16,9 +18,9 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
         width: 170,
         borderRadius: 40,
         paddingVertical: 10,
-        shadowColor: "#000", 
+        shadowColor: useThemeColor("text"),
         shadowOffset: {
-          width: 0,
+          width: 5,
           height: 5, 
         },
         shadowOpacity: 0.4, 
@@ -73,7 +75,7 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
           <Text style={{
             color: "white", 
             fontSize: 18
-            }}> 
+            }}>
             {recipe.rating?.toString()} 
           </Text>
         </View>
