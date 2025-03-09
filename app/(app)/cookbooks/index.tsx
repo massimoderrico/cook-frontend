@@ -1,105 +1,69 @@
 import { ThemedText } from "@/components/ThemedText";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { CookbooksListPage } from "@/components/navigation/CookbooksListPage";
 import { Cookbook, Recipe, Role } from "@/types/graphql";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { useFocusEffect, useRouter, useSegments } from "expo-router";
+import { useSession } from "@/context";
+import { useCallback, useEffect, useState } from "react";
+import { ThemedScrollView } from "@/components/ThemedScrollView";
+import { ThemedView } from "@/components/ThemedView";
+import { CustomButton } from "@/components/CustomButton";
+import { CookbookCard } from "@/components/CookbookCard";
+
+const GET_USER_COOKBOOKS = gql`
+  query GetUserCookbooks($userId: Float!) {
+    getUserCookbooks(userId: $userId) {
+      id
+      name
+      description
+      isPublic
+      isMainCookbook
+      rating
+      recipes {
+        id
+        name
+        ingredients
+      }
+    }
+  }
+`;
+
 
 export default function Cookbooks(){
-    const backgroundColor = useThemeColor("background")
-    const dummyRecipe: Recipe = {
-          name: "Spaghetti",
-          description: "A classic Italian pasta dish with a rich meat sauce.",
-          ingredients: ["200g spaghetti", "300g ground beef", "1 onion, chopped"],
-          prepTime: 15,
-          cookTime: 45,
-          isPublic: true,
-          userId: 123,
-          rating: 4.5,
-          _count: {
-            __typename: undefined,
-            communities: 0,
-            cookbook: 0
-          },
-          createdAt: undefined,
-          id: "",
-          ratingsCount: 0,
-          updatedAt: undefined,
-          user: {
-            __typename: undefined,
-            _count: {
-              __typename: undefined,
-              comments: 0,
-              communities: 0,
-              cookbooks: 0,
-              recipes: 0
-            },
-            comments: undefined,
-            communities: undefined,
-            cookbooks: undefined,
-            createdAt: undefined,
-            email: "",
-            id: "",
-            image: undefined,
-            mainCookbookId: undefined,
-            name: undefined,
-            password: "",
-            recipes: undefined,
-            role: Role.Admin,
-            updatedAt: undefined,
-            username: ""
-          },
-        };
+    const backgroundColor = useThemeColor("background");
+    const router = useRouter();
+    const { userId } = useSession();
+    const { data, loading, error, refetch } = useQuery(GET_USER_COOKBOOKS, {
+      variables: { userId: Number(userId) }
+    });
     
-        const dummyRecipes: Recipe[] = [dummyRecipe, dummyRecipe];
-    
-        const dummyCookbook: Cookbook = {
-          name: "My Recipes",
-          description: "A cookbook for all my recipes cookbook for all my recipes cookbook for all my recipes cookbook for all my recipes",
-          recipes: [dummyRecipe],
-          _count: {
-            __typename: undefined,
-            communities: 0,
-            recipes: 0
-          },
-          createdAt: undefined,
-          id: "",
-          isMainCookbook: false,
-          isPublic: false,
-          ratingsCount: 0,
-          updatedAt: undefined,
-          user: {
-            __typename: undefined,
-            _count: {
-              __typename: undefined,
-              comments: 0,
-              communities: 0,
-              cookbooks: 0,
-              recipes: 0
-            },
-            comments: undefined,
-            communities: undefined,
-            cookbooks: undefined,
-            createdAt: undefined,
-            email: "",
-            id: "",
-            image: undefined,
-            mainCookbookId: undefined,
-            name: undefined,
-            password: "",
-            recipes: undefined,
-            role: Role.Admin,
-            updatedAt: undefined,
-            username: ""
-          },
-          userId: 0
-        };
-    
-        const dummyCookbooks: Cookbook[] = [dummyCookbook] 
+    useEffect(
+      useCallback(() => {
+        if (userId) {
+          console.log("Refetching cookbooks...");
+          refetch();
+        }
+      }, [userId])
+    );
+
+    const handleCreateCookbook = () => {
+      router.push("/(app)/cookbooks/create-cookbook");
+    };
 
     return (
         <SafeAreaView style={{backgroundColor:backgroundColor, flex: 1}}>
             <ThemedText style={{ padding: 20, fontSize: 30, fontWeight: "bold", textAlign: 'center'}}>My Cookbooks</ThemedText>
-            <CookbooksListPage cookbooks={dummyCookbooks}/>
+            <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false}>
+                <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
+                    {data?.getUserCookbooks.map((cookbook: Cookbook) => (
+                        <ThemedView key={cookbook.id} style={{ marginBottom: 10 }}>
+                            <CookbookCard cookbook={cookbook} />
+                        </ThemedView>
+                    ))}
+                </ThemedView>
+                <CustomButton text="Create New Cookbook" bgProps={{style: {marginVertical: 30}, onPress: handleCreateCookbook}} />
+             </ThemedScrollView>
         </SafeAreaView>
     )
 }

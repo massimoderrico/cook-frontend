@@ -75,8 +75,8 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
           <Text style={{
             color: "white", 
             fontSize: 18
-            }}> 
-            {recipe.rating} 
+            }}>
+            {recipe.rating?.toString()} 
           </Text>
         </View>
       </View>

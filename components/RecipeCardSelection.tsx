@@ -7,11 +7,18 @@ import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-export const RecipeCardSelection = ({recipe}: {recipe: Recipe}) => { 
+export const RecipeCardSelection = ({
+    recipe,
+    onSelect,
+  }: {
+    recipe: Recipe;
+    onSelect: (recipeId: number, isSelected: boolean) => void;
+  }) => { 
     const [isSelected, setSelection] = useState(false);
 
     const toggleSelection = () => {
         setSelection(!isSelected);
+        onSelect(Number(recipe.id), !isSelected);
     };
 
     return (
@@ -82,7 +89,7 @@ export const RecipeCardSelection = ({recipe}: {recipe: Recipe}) => {
                     color: "white", 
                     fontSize: 18
                     }}> 
-                    {recipe.rating.toString()} 
+                    {recipe.rating?.toString()} 
                 </Text>
                 </View>
             </View>
