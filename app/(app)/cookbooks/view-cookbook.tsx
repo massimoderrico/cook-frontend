@@ -26,7 +26,7 @@ export default function ViewCookbook() {
 
   return (
     <SafeAreaView style={{ backgroundColor, flex: 1 }}>
-      <ThemedScrollView style={{paddingHorizontal: 20}} showsVerticalScrollIndicator={false}>
+      <ThemedScrollView style={{paddingHorizontal: 20}} showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}>
                   <ThemedText style={{ 
                       fontWeight: 700, 
                       textAlign: 'center', 

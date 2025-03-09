@@ -7,11 +7,18 @@ import { Cookbook } from "@/types/graphql";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-export const CookbookCardSelection = ({cookbook}: {cookbook: Cookbook}) => {
+export const CookbookCardSelection = ({
+    cookbook,
+    onSelect,
+  }: {
+    cookbook: Cookbook;
+    onSelect: (cookbookId: number, isSelected: boolean) => void;
+  }) => {
     const [isSelected, setSelection] = useState(false);
 
     const toggleSelection = () => {
         setSelection(!isSelected);
+        onSelect(Number(cookbook.id), !isSelected);
     };
 
     return (
