@@ -24,6 +24,8 @@ const GET_USER_COOKBOOKS = gql`
         id
         name
         ingredients
+        cookTime
+        rating
       }
     }
   }
