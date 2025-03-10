@@ -33,11 +33,11 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
         paddingVertical: 10,
         shadowColor: useThemeColor("text"),
         shadowOffset: {
-          width: 5,
-          height: 5, 
+          width: 2,
+          height: 2, 
         },
         shadowOpacity: 0.4, 
-        shadowRadius: 10,
+        shadowRadius: 5,
         elevation: 5,
       }}>
       <View style={{ width: "100%", alignItems: "center" }}>
@@ -48,6 +48,7 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
             paddingBottom: 10,
             flexWrap: "wrap",
             width: "100%",
+            paddingHorizontal: 10,
           }}
         >
           {recipe.name}

@@ -22,7 +22,7 @@ const EDIT_COOKBOOK = gql`
     }
 `;
 
-export default function CreateCookbook() {
+export default function EditCookbook() {
   const { selectedCookbook } = useSession();
   const { userId } = useSession();
   if (!selectedCookbook) {

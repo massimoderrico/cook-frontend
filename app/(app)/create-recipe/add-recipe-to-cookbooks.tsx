@@ -17,6 +17,9 @@ const GET_USER_COOKBOOKS = gql`
       id
       name
       description
+      recipes {
+        id
+      }
     }
   }
 `;
