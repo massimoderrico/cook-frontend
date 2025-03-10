@@ -18,8 +18,11 @@ export default function Profile(){
     return (
         <SafeAreaView
         style={{backgroundColor:backgroundColor, flex: 1, alignItems: "center"}}>
-            <ThemedText>Profile</ThemedText>
+            <ThemedText style={{ padding: 20, fontSize: 30, fontWeight: "bold", textAlign: 'center'}}>
+                Profile
+            </ThemedText>
             {/* Profile Picture goes here */}
+            <ThemedView style={{justifyContent: "center", alignItems: "center"}}>
             <View style={{height: 160, width: 160, backgroundColor: "red", borderRadius: 80}}>
                 <TouchableOpacity style={{height: 50, width: 50, borderRadius: 25, backgroundColor: Colors.primary , position: "absolute", bottom: 0, right: 0, justifyContent: "center", alignItems: "center"}}>
                 <Ionicons name="camera" size={24} color={textColor}/>
@@ -31,9 +34,6 @@ export default function Profile(){
                     style: {width: 200, height: 45},
                 }}              
                 text="Edit Profile"/>
-            {/* <TouchableOpacity onPress={() => {console.log(session.userId)}}>
-                <ThemedText>UserId</ThemedText>
-            </TouchableOpacity> */}
             <TouchableOpacity style={{marginTop: 20, flexDirection: "row", alignItems: "center"}}>
                 <View style={{height: 40, width: 40, borderRadius: 25, backgroundColor: Colors.primary, justifyContent: "center", alignItems: "center"}}>
                     <Ionicons name="cog" size={24} color={textColor}/>
@@ -41,12 +41,10 @@ export default function Profile(){
                 <ThemedText style={{paddingLeft: 10}}>Settings</ThemedText>
                 <Ionicons name="chevron-forward" size={24} color={textColor}/>
             </TouchableOpacity>
-            <TouchableOpacity style={{marginTop: 20}}>
-                <ThemedText>Information</ThemedText>
-            </TouchableOpacity>
             <TouchableOpacity style={{marginTop: 20}} onPress={() => {session.signOut()}}>
                 <ThemedText style={{color: Colors.error, fontFamily: Fonts(600)}}>Logout</ThemedText>
             </TouchableOpacity>
+            </ThemedView>
         </SafeAreaView>
     )
 }

@@ -1,7 +1,6 @@
 import { KeyboardAvoidingView } from "react-native"
 import { ThemedScrollView } from "../ThemedScrollView"
-import { useContext, useState } from "react"
-import { ThemedTextInput } from "../ThemedTextInput"
+import { useState } from "react"
 import { Colors } from "@/constants/Colors"
 import { ThemedView } from "../ThemedView"
 import { ThemedText } from "../ThemedText"
@@ -10,7 +9,7 @@ import { ContentType, Recipe } from "@/types/graphql"
 import { CustomButton } from "../CustomButton"
 import { gql, useLazyQuery } from "@apollo/client"
 import { RecipeCard } from "../RecipeCard"
-import { useSession } from "@/context"
+import { Searchbar } from "../Searchbar"
 
 
 const SEARCH_COOKBOOK = gql`
@@ -59,7 +58,7 @@ export const SearchPage = ( ) => {
     return (
         <KeyboardAvoidingView behavior="position" >
             <ThemedView style={{paddingHorizontal: 30}} >
-                <ThemedTextInput 
+                <Searchbar
                 iconProps={{name: "search", color: Colors.primary}}
                 placeholder="Search Query"
                 value={searchQuery}

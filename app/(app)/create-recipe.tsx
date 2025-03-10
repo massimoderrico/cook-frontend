@@ -23,8 +23,8 @@ export default function CreateRecipe () {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: useThemeColor('background') }}>
         <ThemedText  style={{ padding: 20, fontSize: 30, fontWeight: "bold", textAlign: 'center'}}> Create Recipe</ThemedText>
-        <KeyboardAvoidingView behavior="position" style={{paddingBottom: 80}}>
-        <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} >
+        <KeyboardAvoidingView behavior="padding" >
+        <ThemedScrollView style={{paddingHorizontal: 30 }} showsVerticalScrollIndicator={false} >
             <ThemedTextInput 
             placeholder="Recipe Name" 
             value={recipeName} 
@@ -48,7 +48,7 @@ export default function CreateRecipe () {
             }}
             />
             <ThemedView style= {{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
-                <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
+                <ThemedView style={{justifyContent: 'center', alignItems: 'center', }}>
                     <ThemedText fontWeight={500} >
                         Prepration Time
                     </ThemedText>
@@ -59,11 +59,11 @@ export default function CreateRecipe () {
                         value={prepTime} 
                         onChangeText={onChangePrepTime} 
                         style={{
-                            paddingLeft: 10,
+                            paddingLeft: 20,
                             paddingHorizontal: 10,
                             borderWidth: 2,
                             borderColor: Colors.primary,
-                            
+                            width: 95,
                         }}
                     />
                 </ThemedView>       
@@ -71,12 +71,12 @@ export default function CreateRecipe () {
             <ThemedView style= {{flexDirection: 'row', justifyContent: 'space-between', marginTop: 15}}>
                 <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
                     <ThemedText fontWeight={500}>
-                        Cook Time
+                        Cook Time (mins)
                     </ThemedText>
                 </ThemedView>
-                <ThemedView style={{justifyContent: 'center', alignItems: 'center', }}>
+                <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
                     <ThemedTextInput 
-                        placeholder="30 mins" 
+                        placeholder="30" 
                         value={cookTime} 
                         onChangeText={onChangeCookTime} 
                         style={{
@@ -84,7 +84,7 @@ export default function CreateRecipe () {
                             paddingHorizontal: 10,
                             borderWidth: 2,
                             borderColor: Colors.primary,
-                            
+                            width: 95,
                         }}
                     />
                 </ThemedView>       
@@ -112,7 +112,7 @@ export default function CreateRecipe () {
                 Directions
             </ThemedText> 
             <ThemedAdditveTextInput textInputProps={{placeholder: "Add vanilla to cake batter"}} inputArray={directions} setInputArray={setDirections} numbered numberedPrefix="Step "/>
-            <CustomButton text="Save Recipe" bgProps={{style: {marginVertical: 30}, onPress: () => console.log(ingredients)}} />
+            <CustomButton text="Save Recipe" bgProps={{style: {marginBottom: 105, marginVertical: 30}, onPress: () => console.log(ingredients)}} />
         </ThemedScrollView>
         </KeyboardAvoidingView>
         </SafeAreaView>
