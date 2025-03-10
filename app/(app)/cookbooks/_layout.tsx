@@ -6,6 +6,7 @@ export default function Cookbook() {
       <Stack.Screen name="index" />
       <Stack.Screen name="add-recipes-to-cookbook" />
       <Stack.Screen name="view-cookbook" />
+      <Stack.Screen name="view-recipe" />
       <Stack.Screen name="edit-cookbook" />
       <Stack.Screen name="create-cookbook" />
       <Stack.Screen name="remove-recipes-from-cookbook" />

@@ -67,7 +67,7 @@ export default function EditRecipe () {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: useThemeColor('background') }}>
-        <ThemedText  style={{ padding: 20, fontSize: 30, fontWeight: "bold", textAlign: 'center'}}> Create Recipe</ThemedText>
+        <ThemedText  style={{ padding: 20, fontSize: 30, fontWeight: "bold", textAlign: 'center'}}> Edit Recipe</ThemedText>
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={20} style={{flex: 1}}>
         <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled"
       contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }} >

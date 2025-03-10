@@ -5,7 +5,7 @@ export default function CreateRecipeLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="add-recipe-to-cookbooks" />
-      <Stack.Screen name="view-recipe" />
+      <Stack.Screen name="edit-recipe" />
     </Stack>
   );
 }
