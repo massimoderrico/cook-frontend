@@ -18,7 +18,7 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
   const handlePress = () => {
     setSelectedRecipe(recipe);
     router.push({
-        pathname: "/(app)/create-recipe/view-recipe",
+        pathname: "/(app)/cookbooks/view-recipe",
         params: {id: recipe.id},
     });
   };
