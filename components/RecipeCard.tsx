@@ -18,7 +18,7 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
   const handlePress = () => {
     setSelectedRecipe(recipe);
     router.push({
-        pathname: "/",
+        pathname: "/(app)/create-recipe/view-recipe",
         params: {id: recipe.id},
     });
   };
