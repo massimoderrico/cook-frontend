@@ -23,8 +23,12 @@ const GET_USER_COOKBOOKS = gql`
       recipes {
         id
         name
+        image
+        description
         ingredients
+        directions
         cookTime
+        prepTime
         rating
       }
     }
