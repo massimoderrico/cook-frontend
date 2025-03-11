@@ -71,7 +71,7 @@ export const ThemedIngredientAdditveTextInput = (
                         labelField={"label"} 
                         valueField={"value"} 
                         onChange={(item) => setMeasurementType(item.value)}
-                        style={{ flex: 2, paddingLeft: 10, marginHorizontal: 4, }}
+                        style={{ flex: 2, paddingLeft: 10, marginHorizontal: 4, height: 54 }}
                         placeholder="tsp"
                         maxHeight={225}
                     />

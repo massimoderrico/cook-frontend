@@ -47,6 +47,7 @@ export const ThemedTextInput = ({
                     shadowOffset: {width: 0, height: 0},
                     shadowOpacity: 0.2,
                     shadowRadius: 10,
+                    paddingHorizontal: 15,
                 }}
             {...rest}/>
         </ThemedView>
