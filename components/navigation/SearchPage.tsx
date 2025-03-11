@@ -6,12 +6,13 @@ import { Colors } from "@/constants/Colors"
 import { ThemedView } from "../ThemedView"
 import { ThemedText } from "../ThemedText"
 import { ThemedDropdown } from "../ThemedDropdown"
-import { ContentType, Recipe } from "@/types/graphql"
 import { CustomButton } from "../CustomButton"
 import { gql, useLazyQuery } from "@apollo/client"
 import { RecipeCard } from "../RecipeCard"
 import { useSession } from "@/context"
 import { Searchbar } from "../Searchbar"
+import { ContentType } from "@/constants/Data"
+import { Recipe } from "@/types/graphql"
 
 
 const SEARCH_COOKBOOK = gql`
