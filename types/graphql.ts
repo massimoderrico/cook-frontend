@@ -1355,5 +1355,5 @@ export const MeasurementTypes = [
 export const ContentType = [
   { label: 'Recipes', value: 'Recipe' },
   { label: 'Cookbooks', value: 'Cookbook' },
-  { label: 'Users', value: 'User' },
+  // { label: 'Communities', value: 'Community' },
 ]
