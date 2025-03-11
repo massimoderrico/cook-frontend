@@ -48,28 +48,42 @@ export default function HomePage() {
             paddingHorizontal: 10,
         },
         cardWrapper: {
-            width: "42%",
             marginBottom: 15,
+            marginHorizontal: 10,
         },
         safeArea: {
             backgroundColor:backgroundColor, 
             flex: 1
+        },
+        titleText: { 
+            padding: 20,
+            fontSize: 30, 
+            fontWeight: "bold", 
+            textAlign: 'center'
+        },
+        scrollView: {
+            paddingHorizontal: 10,
+        },
+        contentContainer: {
+            flexGrow: 1,
+            paddingBottom: 100,
         }
     })
     return (
         <SafeAreaView style={styles.safeArea}>
-            <ThemedText style={{ padding: 20, fontSize: 30, fontWeight: "bold", textAlign: 'center'}}>Home</ThemedText>
-                <FlatList
-                    data={data?.hpGetTopRecipes}
-                    keyExtractor={(recipe) => recipe.id}
-                    numColumns={2}
-                    columnWrapperStyle={{ justifyContent: "center" }}
-                    renderItem={({item}) => (
-                        <ThemedView key={item.id} style={styles.cardWrapper}>
-                            <RecipeCard recipe={item}/>
+            <ThemedText style={styles.titleText}>Home</ThemedText>
+            <ThemedScrollView style={styles.scrollView} 
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.contentContainer}
+            >
+                <ThemedView style={styles.gridContainer}>
+                    {data?.hpGetTopRecipes.map((recipe: Recipe) => (
+                        <ThemedView key={recipe.id} style={styles.cardWrapper}>
+                            <RecipeCard recipe={recipe}/>
                         </ThemedView>
-                    )}
-                />
-    </SafeAreaView>
+                    ))}
+                </ThemedView>
+            </ThemedScrollView>
+        </SafeAreaView>
     )
 }
