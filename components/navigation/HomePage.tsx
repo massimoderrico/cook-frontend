@@ -71,7 +71,7 @@ export default function HomePage() {
     })
     return (
         <SafeAreaView style={styles.safeArea}>
-            <ThemedText style={styles.titleText}>Home</ThemedText>
+            <ThemedText style={styles.titleText}>Homme</ThemedText>
             <ThemedScrollView style={styles.scrollView} 
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.contentContainer}
