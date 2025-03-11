@@ -79,7 +79,6 @@ export default function CreateRecipe () {
             style={{
                 borderWidth: 2,
                 borderColor: Colors.primary,
-                paddingLeft: 10
             }}
             />
             <ThemedTextInput 
@@ -87,10 +86,10 @@ export default function CreateRecipe () {
             value={description} 
             multiline={true}
             onChangeText={onChangeDescription}
-            style={{marginVertical: 10,
+            style={{
+                marginVertical: 10,
                 borderWidth: 2,
                 borderColor: Colors.primary,
-                paddingLeft: 10,
                 height: 100 
             }}
             />
@@ -107,8 +106,6 @@ export default function CreateRecipe () {
                         onChangeText={onChangePrepTime} 
                         keyboardType="numeric"
                         style={{
-                            paddingLeft: 10,
-                            paddingHorizontal: 10,
                             borderWidth: 2,
                             borderColor: Colors.primary,
                             
@@ -129,11 +126,8 @@ export default function CreateRecipe () {
                         onChangeText={onChangeCookTime}
                         keyboardType="numeric" 
                         style={{
-                            paddingLeft: 10,
-                            paddingHorizontal: 10,
                             borderWidth: 2,
                             borderColor: Colors.primary,
-                            
                         }}
                     />
                 </ThemedView>       

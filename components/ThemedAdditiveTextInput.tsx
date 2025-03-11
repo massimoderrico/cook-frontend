@@ -51,7 +51,6 @@ export const ThemedAdditveTextInput = (
             <ThemedTextInput 
                 placeholder= {textInputRest.placeholder}
                 style={[{
-                    paddingLeft: 10,
                     marginTop: 20,
                     borderWidth: 2,
                     borderColor: Colors.primary, 

@@ -11,6 +11,7 @@ import { CustomButton } from "../CustomButton"
 import { gql, useLazyQuery } from "@apollo/client"
 import { RecipeCard } from "../RecipeCard"
 import { useSession } from "@/context"
+import { Searchbar } from "../Searchbar"
 
 
 const SEARCH_COOKBOOK = gql`
@@ -59,7 +60,7 @@ export const SearchPage = ( ) => {
     return (
         <KeyboardAvoidingView behavior="position" >
             <ThemedView style={{paddingHorizontal: 30}} >
-                <ThemedTextInput 
+                <Searchbar 
                 iconProps={{name: "search", color: Colors.primary}}
                 placeholder="Search Query"
                 value={searchQuery}
