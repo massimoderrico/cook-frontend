@@ -42,7 +42,6 @@ const SIGNIN = gql`
       accessToken
       userId
       email
-      username
     }
   }
 `;
@@ -53,7 +52,6 @@ const LOGIN = gql`
       accessToken
       userId
       email
-      username
     }
   }
 `;

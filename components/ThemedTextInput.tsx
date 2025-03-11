@@ -23,13 +23,15 @@ export const ThemedTextInput = ({
     iconProps,
     ...rest
     }: ThemedTextInputProps ) => {
+
     const textColor = useThemeColor('text', !invertColors)
     const backgroundColor = useThemeColor('background', !invertColors)
     const placeholderTextColor = textColor + placeholderOpacity.toString(16)
 
     return (
         <ThemedView style={[{
-            
+            flexDirection: 'row', 
+            alignItems: 'center', 
             backgroundColor: backgroundColor,
             borderRadius: 15}, style]}>
             <TextInput 
@@ -42,14 +44,16 @@ export const ThemedTextInput = ({
                     fontFamily: Fonts(fontWeight),
                     height: 50,
                     fontSize: 20,
+                    paddingLeft: 25,
                     shadowColor: backgroundColor,
                     borderRadius: 15,
                     shadowOffset: {width: 0, height: 0},
                     shadowOpacity: 0.2,
                     shadowRadius: 10,
-                    paddingHorizontal: 15,
+                    flex: 8,
                 }}
             {...rest}/>
+            {iconProps && <Ionicons style={{flex: 1}} size={28} {...iconProps}/>}
         </ThemedView>
           
     )

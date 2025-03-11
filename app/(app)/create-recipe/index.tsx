@@ -79,6 +79,7 @@ export default function CreateRecipe () {
             style={{
                 borderWidth: 2,
                 borderColor: Colors.primary,
+                paddingLeft: 10
             }}
             />
             <ThemedTextInput 
@@ -89,26 +90,28 @@ export default function CreateRecipe () {
             style={{marginVertical: 10,
                 borderWidth: 2,
                 borderColor: Colors.primary,
+                paddingLeft: 10,
                 height: 100 
             }}
             />
             <ThemedView style= {{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
-                <ThemedView style={{justifyContent: 'center', alignItems: 'center', }}>
+                <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
                     <ThemedText fontWeight={500} >
                         Prepration Time
                     </ThemedText>
                 </ThemedView>
                 <ThemedView style={{justifyContent: 'center', alignItems: 'center', }}>
                     <ThemedTextInput  
-                        placeholder="35 mins" 
+                        placeholder="30 mins" 
                         value={prepTime} 
                         onChangeText={onChangePrepTime} 
                         keyboardType="numeric"
                         style={{
-                
+                            paddingLeft: 10,
+                            paddingHorizontal: 10,
                             borderWidth: 2,
                             borderColor: Colors.primary,
-                            width: 95,
+                            
                         }}
                     />
                 </ThemedView>       
@@ -116,19 +119,21 @@ export default function CreateRecipe () {
             <ThemedView style= {{flexDirection: 'row', justifyContent: 'space-between', marginTop: 15}}>
                 <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
                     <ThemedText fontWeight={500}>
-                        Cook Time (mins)
+                        Cook Time
                     </ThemedText>
                 </ThemedView>
-                <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
+                <ThemedView style={{justifyContent: 'center', alignItems: 'center', }}>
                     <ThemedTextInput 
                         placeholder="30 mins" 
                         value={cookTime} 
                         onChangeText={onChangeCookTime}
                         keyboardType="numeric" 
                         style={{
+                            paddingLeft: 10,
+                            paddingHorizontal: 10,
                             borderWidth: 2,
                             borderColor: Colors.primary,
-                            width: 95,
+                            
                         }}
                     />
                 </ThemedView>       
