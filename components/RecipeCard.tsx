@@ -2,16 +2,29 @@ import React, { useEffect, useState } from "react";
 import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
 import { Recipe } from "../types/graphql";
-import { View, Text, useColorScheme, Image } from "react-native";
+import { View, Text, useColorScheme, Image, TouchableOpacity } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { useRouter } from "expo-router";
+import { useSession } from "@/context";
 
 
 export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
   // const image = recipe.image? recipe.image : require('../assets/images/icon.png');
-  
+  const router = useRouter();
+  const { setSelectedRecipe } = useSession();
+
+  const handlePress = () => {
+    setSelectedRecipe(recipe);
+    router.push({
+        pathname: "/(app)/cookbooks/view-recipe",
+        params: {id: recipe.id},
+    });
+  };
+
   return (
+    <TouchableOpacity onPress={handlePress}>
     <ThemedView invertColors={true} 
       style={{ 
         alignItems: 'center',
@@ -20,11 +33,11 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
         paddingVertical: 10,
         shadowColor: useThemeColor("text"),
         shadowOffset: {
-          width: 5,
-          height: 5, 
+          width: 2,
+          height: 2, 
         },
         shadowOpacity: 0.4, 
-        shadowRadius: 10,
+        shadowRadius: 5,
         elevation: 5,
       }}>
       <View style={{ width: "100%", alignItems: "center" }}>
@@ -35,6 +48,7 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
             paddingBottom: 10,
             flexWrap: "wrap",
             width: "100%",
+            paddingHorizontal: 10,
           }}
         >
           {recipe.name}
@@ -75,11 +89,12 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
           <Text style={{
             color: "white", 
             fontSize: 18
-            }}> 
-            {recipe.rating} 
+            }}>
+            {recipe.rating?.toString()} 
           </Text>
         </View>
       </View>
     </ThemedView>
+    </TouchableOpacity>
   );
 }

@@ -12,9 +12,9 @@ import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import { CustomButton } from "@/components/CustomButton";
 
-const CREATE_COOKBOOK = gql`
-    mutation CreateCookbook($data: CookbookCreateInput!) {
-        createCookbook(data: $data) {
+const EDIT_COOKBOOK = gql`
+    mutation EditCookbook($cookbookId: Int!, $data: CookbookUpdateManyMutationInput!) {
+        editCookbook(cookbookId: $cookbookId, data: $data) {
             id
             name
             description
@@ -22,40 +22,39 @@ const CREATE_COOKBOOK = gql`
     }
 `;
 
-export default function CreateCookbook() {
-  const backgroundColor = useThemeColor("background");
-  const [cookbookName, onChangeCookbookName ] = useState<string>();
-  const [description, onChangeDescription ] = useState<string>();
-  const [isPublic, setIsPublic ] = useState<boolean>(false);
-  
+export default function EditCookbook() {
+  const { selectedCookbook } = useSession();
   const { userId } = useSession();
+  if (!selectedCookbook) {
+    return <ThemedText>No Cookbook Found</ThemedText>;
+    }
+  const backgroundColor = useThemeColor("background");
+  const [cookbookName, onChangeCookbookName ] = useState<string>(selectedCookbook?.name || "");
+  const [description, onChangeDescription ] = useState<string>(selectedCookbook?.description || "");
+  const [isPublic, setIsPublic ] = useState<boolean>(selectedCookbook?.isPublic || false);
+  
   const router = useRouter();
-  const [createCookbook, { loading, data, error }] = useMutation(CREATE_COOKBOOK);
+  const [editCookbook, { loading, data, error }] = useMutation(EDIT_COOKBOOK);
   
   const handleSaveCookbook = async () => { 
       if (!userId) return;
       try {
-        const { data } = await createCookbook({
-          variables: {
-            data: {
-              name: cookbookName,
-              description,
-              isPublic,
-              user: { connect: { id: userId } },
+        const { data } = await editCookbook({
+            variables: {
+                cookbookId: parseInt(selectedCookbook.id),
+                data: {
+                  name: { set: cookbookName },
+                  description: { set: description },
+                  isPublic: { set: isPublic },
+                },
             },
-          },
         });
-        console.log("Cookbook created:", data);
-        if (data?.createCookbook) {
-          router.push({
-              pathname: "/(app)/cookbooks/add-recipes-to-cookbook",
-              params: {id: data?.createCookbook.id},
-          });
-        }
+        console.log("Cookbook updated:", data);
+        router.push("/(app)/cookbooks");
         } catch (err) {
-          console.error("Error creating cookbook:", err);
+          console.error("Error updating cookbook:", err);
         }
-      };
+    };
 
   return (
     <SafeAreaView style={{ backgroundColor, flex: 1 }}>
