@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/ThemedText";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { Cookbook, Recipe, Role } from "@/types/graphql";
+import { Cookbook, Permission, Recipe, Role } from "@/types/graphql";
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { useFocusEffect, useRouter, useSegments } from "expo-router";
 import { useSession } from "@/context";
@@ -35,23 +35,77 @@ const GET_USER_COOKBOOKS = gql`
   }
 `;
 
+const GET_PERMISSION = gql`
+  query GetPermission($data: PermissionWhereInput!) {
+    getPermission(data: $data) {
+      resourceId
+    }
+  }
+`;
+
+const GET_COOKBOOKS_BY_IDS = gql`
+  query GetCookbooksByIds($ids: [Float!]!) {
+    getCookbooksByIds(ids: $ids) {
+      id
+      name
+      description
+      isPublic
+      isMainCookbook
+      rating
+      recipes {
+        id
+        name
+        image
+        description
+        ingredients
+        directions
+        cookTime
+        prepTime
+        rating
+      }
+    }
+  }
+`;
+
 
 export default function Cookbooks(){
     const backgroundColor = useThemeColor("background");
     const router = useRouter();
     const { userId } = useSession();
-    const { data, loading, error, refetch } = useQuery(GET_USER_COOKBOOKS, {
+    const { data: cookbookData, loading: cookbookLoading, error: cookbookError, refetch: cookbookUserRefetch } = useQuery(GET_USER_COOKBOOKS, {
       variables: { userId: Number(userId) }
+    });
+    const { data: permissionData, loading: permissionLoading, error: permissionError, refetch: permissionRefetch } = useQuery(GET_PERMISSION, {
+      variables: { 
+        data: {
+          userId: { equals: Number(userId) },
+          resourceType: { equals: "COOKBOOK" },
+        }, 
+      },
+    });
+    const { data: permissionCookbookData, loading: permissionCookbookLoading, error: permissionCookbookError, refetch: permissionCookbookRefetch } = useQuery(GET_COOKBOOKS_BY_IDS, {
+      skip: !permissionData || !permissionData.getPermission.length,
+      variables: {
+        ids: permissionData?.getPermission.map((permission: Permission) => permission.resourceId) || [],
+      },
     });
     
     useEffect(
       useCallback(() => {
         if (userId) {
           console.log("Refetching cookbooks...");
-          refetch();
+          cookbookUserRefetch();
+          permissionRefetch();
+          permissionCookbookRefetch();
         }
-      }, [userId])
+      }, [userId, cookbookUserRefetch, permissionRefetch, permissionCookbookRefetch])
     );
+    
+    // Combine cookbooks from both sources
+    const combinedCookbooks = [
+      ...(cookbookData?.getUserCookbooks || []),
+      ...(permissionCookbookData?.getCookbooksByIds || []),
+    ];
 
     const handleCreateCookbook = () => {
       router.push("/(app)/cookbooks/create-cookbook");
@@ -62,7 +116,7 @@ export default function Cookbooks(){
             <ThemedText style={{ padding: 20, fontSize: 30, fontWeight: "bold", textAlign: 'center'}}>My Cookbooks</ThemedText>
             <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}>
                 <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
-                    {data?.getUserCookbooks.map((cookbook: Cookbook) => (
+                    {combinedCookbooks.map((cookbook: Cookbook) => (
                         <ThemedView key={cookbook.id} style={{ marginBottom: 10 }}>
                             <CookbookCard cookbook={cookbook} />
                         </ThemedView>
