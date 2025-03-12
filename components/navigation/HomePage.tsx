@@ -1,4 +1,4 @@
-import { SafeAreaView, View, StyleSheet, FlatList } from "react-native";
+import { SafeAreaView, View, StyleSheet, FlatList, Dimensions } from "react-native";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { RecipeCard } from "@/components/RecipeCard";
 import { Recipe, Role } from "@/types/graphql";
@@ -9,7 +9,7 @@ import { ThemedScrollView } from "../ThemedScrollView";
 
 const FETCH_RECIPES = gql`
     query TopRecipes {
-        hpGetTopRecipes {
+        hpGetTopRecipes(first: 20) {
             id
             name
             description
@@ -24,6 +24,12 @@ const FETCH_RECIPES = gql`
 `;
 
 export default function HomePage() {
+    const screenWidth = Dimensions.get("screen").width;
+    const cardMargin = 20;
+    const numColumns = 2;
+
+    const cardWidth = (screenWidth - (numColumns + 1) * cardMargin) / numColumns;
+
     const backgroundColor = useThemeColor("background");
     const {data, loading, error}= useQuery(FETCH_RECIPES)
     
@@ -44,12 +50,11 @@ export default function HomePage() {
             flexDirection: "row",
             flexWrap: "wrap",
             justifyContent: "center",
-            alignItems: "center",
-            paddingHorizontal: 10,
+            padding: cardMargin,
         },
         cardWrapper: {
-            marginBottom: 15,
-            marginHorizontal: 10,
+            width: cardWidth,
+            margin: cardMargin / 2,
         },
         safeArea: {
             backgroundColor:backgroundColor, 
@@ -71,19 +76,19 @@ export default function HomePage() {
     })
     return (
         <SafeAreaView style={styles.safeArea}>
-            <ThemedText style={styles.titleText}>Homme</ThemedText>
-            <ThemedScrollView style={styles.scrollView} 
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.contentContainer}
-            >
-                <ThemedView style={styles.gridContainer}>
-                    {data?.hpGetTopRecipes.map((recipe: Recipe) => (
-                        <ThemedView key={recipe.id} style={styles.cardWrapper}>
-                            <RecipeCard recipe={recipe}/>
+            <ThemedText style={styles.titleText}>Home</ThemedText>
+            <FlatList
+                    data={data?.hpGetTopRecipes}
+                    keyExtractor={(recipe) => recipe.id}
+                    numColumns={numColumns}
+                    columnWrapperStyle={{ justifyContent: "space-between" }}
+                    renderItem={({item}) => (
+                        <ThemedView key={item.id} style={styles.cardWrapper}>
+                            <RecipeCard recipe={item}/>
                         </ThemedView>
-                    ))}
-                </ThemedView>
-            </ThemedScrollView>
+                    )}
+                    contentContainerStyle={{ paddingBottom: 20, paddingHorizontal: cardMargin}}
+                />
         </SafeAreaView>
     )
 }
