@@ -86,7 +86,7 @@ export default function EditCookbook() {
                 <ThemedView style= {{flexDirection: 'row', justifyContent: 'space-between', marginTop: 15}}>
                     <ThemedView style={{justifyContent: 'center', alignItems: 'center'}}>
                         <ThemedText fontWeight={500} >
-                            Public Recipe
+                            Public Cookbook
                         </ThemedText>
                     </ThemedView>
                     <ThemedView style={{justifyContent: 'center', alignItems: 'center', }}>
