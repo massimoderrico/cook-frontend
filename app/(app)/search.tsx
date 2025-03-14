@@ -9,6 +9,7 @@ export default function Search(){
     return (
         <SafeAreaView
         style={{backgroundColor:backgroundColor, flex: 1}}>
+            <ThemedText style={{ padding: 20, fontSize: 30, fontWeight: "bold", textAlign: 'center'}}>Search</ThemedText>
             <SearchPage/>
         </SafeAreaView>
     )

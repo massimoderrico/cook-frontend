@@ -30,6 +30,7 @@ const GET_USER_COOKBOOKS = gql`
         cookTime
         prepTime
         rating
+        isPublic
       }
     }
   }
@@ -62,6 +63,7 @@ const GET_COOKBOOKS_BY_IDS = gql`
         cookTime
         prepTime
         rating
+        isPublic
       }
     }
   }
