@@ -119,7 +119,7 @@ export default function ViewRecipe () {
                             onChangeText={setRating}
                             keyboardType="numeric"
                             placeholder="e.g. 4.5"
-                            style={{ height: 55, padding: 10, borderWidth: 1, borderColor: "#ddd", borderRadius: 5 }}
+                            style={{ height: 70, padding: 5, borderWidth: 1, borderColor: "#ddd", borderRadius: 5 }}
                         />
                         <TouchableOpacity onPress={submitRating} style={{ marginTop: 10, padding: 10, backgroundColor: Colors.primary, borderRadius: 15 }}>
                             <ThemedText style={{ color: "white", textAlign: "center" }}>Submit</ThemedText>
