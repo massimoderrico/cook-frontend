@@ -131,7 +131,7 @@ export default function ViewCookbook() {
 
   const addRecipesToCookbook = () => {
     setMenuVisible(false);
-    router.push({
+    router.replace({
       pathname: "/(app)/cookbooks/add-recipes-to-cookbook",
       params: {id: selectedCookbook.id},
     });
@@ -140,7 +140,7 @@ export default function ViewCookbook() {
   const removeRecipesFromCookbook = () => {
     setMenuVisible(false);
     setSelectedCookbook(selectedCookbook);
-    router.push({
+    router.replace({
       pathname: "/(app)/cookbooks/remove-recipes-from-cookbook",
       params: {id: selectedCookbook.id},
     });
@@ -149,7 +149,7 @@ export default function ViewCookbook() {
   const editCookbook = () => {
     setMenuVisible(false);
     setSelectedCookbook(selectedCookbook);
-    router.push("/(app)/cookbooks/edit-cookbook");
+    router.replace("/(app)/cookbooks/edit-cookbook");
   };
 
   const deleteCookbook = async () => {
@@ -162,7 +162,7 @@ export default function ViewCookbook() {
           userId 
         },
       });
-      router.push("/(app)/cookbooks");
+      router.replace("/(app)/cookbooks");
     } catch (err) {
       console.error("Error deleting cookbook:", err);
     }

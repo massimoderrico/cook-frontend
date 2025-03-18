@@ -56,7 +56,7 @@ export default function CreateRecipe () {
           });
           console.log("Recipe created:", data);
           if (data?.createRecipe) {
-            router.push({
+            router.replace({
                 pathname: "/(app)/create-recipe/add-recipe-to-cookbooks",
                 params: {id: data?.createRecipe.id},
             });

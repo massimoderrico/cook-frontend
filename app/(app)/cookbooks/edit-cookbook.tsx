@@ -50,7 +50,7 @@ export default function EditCookbook() {
             },
         });
         console.log("Cookbook updated:", data);
-        router.push("/(app)/cookbooks");
+        router.replace("/(app)/cookbooks");
         } catch (err) {
           console.error("Error updating cookbook:", err);
         }

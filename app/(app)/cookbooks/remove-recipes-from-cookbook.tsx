@@ -61,7 +61,7 @@ export default function RemoveRecipeFromCookbook() {
             });
         }
         console.log("Recipes removed successfully.");
-        router.push("/(app)/cookbooks");
+        router.replace("/(app)/cookbooks");
     } catch (error) {
         console.error("Error removing recipe:", error);
     }

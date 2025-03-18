@@ -76,7 +76,7 @@ export default function AddRecipesToCookbook(){
           },
         });
         console.log("Cookbook saved successfully.");
-        router.push('/(app)/cookbooks')
+        router.replace('/(app)/cookbooks')
       } catch (error) {
         console.error("Error saving cookbook:", error);
       }

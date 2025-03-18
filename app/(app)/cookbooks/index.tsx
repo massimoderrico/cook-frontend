@@ -91,7 +91,20 @@ export default function Cookbooks(){
         ids: permissionData?.getPermission.map((permission: Permission) => permission.resourceId) || [],
       },
     });
+
+    const handleScroll = () => {
+      if (window.scrollY === 0){
+        cookbookUserRefetch();
+        permissionRefetch();
+        permissionCookbookRefetch();
+      }
+    };
     
+    useEffect(() => {
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     useEffect(
       useCallback(() => {
         if (userId) {
@@ -110,7 +123,7 @@ export default function Cookbooks(){
     ];
 
     const handleCreateCookbook = () => {
-      router.push("/(app)/cookbooks/create-cookbook");
+      router.replace("/(app)/cookbooks/create-cookbook");
     };
 
     return (
