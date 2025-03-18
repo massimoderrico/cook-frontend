@@ -1,4 +1,4 @@
-import { Redirect, Stack, Tabs } from 'expo-router';
+import { Redirect, router, Stack, Tabs } from 'expo-router';
 import React from 'react';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
@@ -50,6 +50,12 @@ export default function AppLayout() {
             <TabBarIcon name={"add-circle"} size={40} color={focused ? color: useThemeColor("text")} />
           ),
         }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault(); // Prevent default behavior
+            router.replace("/(app)/create-recipe"); // Reset to index
+          },
+        }}
       />
       <Tabs.Screen
         name="cookbooks"
@@ -57,6 +63,12 @@ export default function AppLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'book' : 'book-outline'} color={focused ? color: useThemeColor("text")} />
           ),
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault(); // Prevent default behavior
+            router.replace("/cookbooks"); // Reset to index
+          },
         }}
       />
       <Tabs.Screen
