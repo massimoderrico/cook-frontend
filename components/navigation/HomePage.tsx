@@ -36,6 +36,7 @@ export default function HomePage() {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [skip, setSkip] = useState(0);
     const [loadingMore, setLoadingMore] = useState(false);
+    const [reachedEnd, setReachedEnd] = useState(false)
     
     //Fetch recipes lazily
     const [fetchRecipes, { loading, data, error }] = useLazyQuery(FETCH_RECIPES, { 
@@ -63,6 +64,12 @@ export default function HomePage() {
         console.log("we are skipping new recipes");
         fetchRecipes({
             variables: { skip: newSkip, first: 10}
+        })
+        .then(() => {
+            if (!data?.hpGetTopRecipes) {
+                console.log("No more recipes to load");
+            }
+            
         })
         .finally(() => {
             setSkip(newSkip);

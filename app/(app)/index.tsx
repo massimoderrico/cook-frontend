@@ -6,5 +6,6 @@ import HomePage from "@/components/navigation/HomePage";
 export default function Home(){
     return (
         <HomePage />
+        // <ThemedText>Hello</ThemedText>
     )
 }
