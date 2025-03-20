@@ -2,14 +2,12 @@ import { ThemedText } from "@/components/ThemedText";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { TouchableOpacity, View } from "react-native";
-import { router } from "expo-router";
 import { useSession } from "@/context";
 import { CustomButton } from "@/components/CustomButton";
 import { ThemedView } from "@/components/ThemedView";
 import { colors, Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useFonts } from "expo-font";
 
 export default function Profile(){
     const backgroundColor = useThemeColor("background")
