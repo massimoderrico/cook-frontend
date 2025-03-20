@@ -72,7 +72,7 @@ const CREATE_COOKBOOK = gql`
 
 
 
-export default function Dev() {
+export default function genData() {
     const [createRecipe, { loading, data, error }] = useMutation(CREATE_RECIPE);
     const [createCookbook, { loading: cookbookLoading, data: cookbookData, error: cookbookError }] = useMutation(CREATE_COOKBOOK);
     const [signInMutation, { loading: signInLoading }] = useMutation(SIGNIN);
