@@ -5,6 +5,7 @@ import HomePage from "@/components/navigation/HomePage";
 
 export default function Home(){
     return (
-        <HomePage />
+        <></>
+        // <HomePage />
     )
 }
