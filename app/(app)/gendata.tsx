@@ -78,7 +78,7 @@ export default function genData() {
     const [signInMutation, { loading: signInLoading }] = useMutation(SIGNIN);
     const backgroundColor = useThemeColor("background")
     const [userIDs, setUserIDs] = useState<number[]>([])
-    const numRecipesPerUser = 10;
+    const numRecipesPerUser = 5;
     
     const createDummyRecipes = async () => {
         for (var user = 0; user < users.length; user++) {
@@ -87,7 +87,9 @@ export default function genData() {
             const userId = result.data.signup.userId;
             setUserIDs([...userIDs, userId]);
             for (var i = 0; i < numRecipesPerUser; i++) {
-                const recipe = dummyRecipeList[user * numRecipesPerUser + i];
+                const recipeNum  = user * numRecipesPerUser + i
+                const recipe = dummyRecipeList[recipeNum];
+                recipe["image"] = "pic"+recipeNum+".png";
                 try {
                     await createRecipe({ variables: { data: { ...recipe, user: { connect: { id: userId } } } } });
                 } catch (e) {
@@ -103,7 +105,7 @@ export default function genData() {
         <SafeAreaView
         style={{backgroundColor:backgroundColor}}>
             <TouchableOpacity onPress={() => createDummyRecipes()}>
-                <ThemedText>Dev</ThemedText>
+                <ThemedText>Generate Dummy Data</ThemedText>
             </TouchableOpacity>
         </SafeAreaView>
     )
