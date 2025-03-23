@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/ThemedText";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { Modal, StyleSheet, TouchableOpacity } from "react-native"
+import { Modal, StyleSheet, TouchableOpacity, Image } from "react-native"
 import { ThemedView } from "@/components/ThemedView";
 import { useSession } from "@/context";
 import { ThemedScrollView } from "@/components/ThemedScrollView";
@@ -164,7 +164,7 @@ export default function ViewRecipe () {
                               <ThemedText>Add rating</ThemedText>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={deleteRecipe} style={{ paddingVertical: 10 }}>
-                              <ThemedText style={{color: "red"}}>Delete Recipe</ThemedText>
+                              <ThemedText style={{color: Colors.error}}>Delete Recipe</ThemedText>
                             </TouchableOpacity>
                           </ThemedView>
                         </TouchableOpacity>
@@ -208,7 +208,7 @@ export default function ViewRecipe () {
                             </ThemedView>
                         </ThemedView>
                     </ThemedView>
-                    <ThemedView style={{marginRight: 10, marginTop: 10, borderRadius: 30, height: 145, width: 145, backgroundColor: "red"}}/> 
+                    <Image source= {{uri: selectedRecipe.image || undefined}} style={{marginRight: 10, marginTop: 10, borderRadius: 30, height: 145, width: 145 }}/> 
                     </ThemedView>
         
                     <ThemedView style={{marginLeft: 10}}>

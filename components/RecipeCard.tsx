@@ -10,7 +10,6 @@ import { useRouter } from "expo-router";
 import { useSession } from "@/context";
 
 export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
-  const image = recipe.image || "null"
   const router = useRouter();
   const { setSelectedRecipe } = useSession();
 
@@ -55,7 +54,7 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
       </View>
       {/* replace themed view with image below  */}
       {/* <ThemedView style={{borderRadius: 30, height: 69, width: 147, backgroundColor: "red"}}/>  */}
-      <Image source={{ uri: image }} style={{borderRadius: 30, height: 69, width: 147}}/> 
+      <Image source={{ uri: recipe.image || undefined }} style={{borderRadius: 30, height: 69, width: 147}}/> 
       <View style={{
         flexDirection: 'row', 
         justifyContent: 'space-evenly',

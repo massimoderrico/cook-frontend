@@ -238,7 +238,7 @@ export default function ViewCookbook() {
               <ThemedText>Remove Recipes</ThemedText>
             </TouchableOpacity>
             <TouchableOpacity onPress={deleteCookbook} style={{ paddingVertical: 10 }}>
-              <ThemedText style={{color: "red"}}>Delete Cookbook</ThemedText>
+              <ThemedText style={{color: Colors.error}}>Delete Cookbook</ThemedText>
             </TouchableOpacity>
           </ThemedView>
         </TouchableOpacity>
