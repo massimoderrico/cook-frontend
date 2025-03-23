@@ -9,9 +9,8 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { useRouter } from "expo-router";
 import { useSession } from "@/context";
 
-
 export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
-  // const image = recipe.image? recipe.image : require('../assets/images/icon.png');
+  const image = recipe.image || "null"
   const router = useRouter();
   const { setSelectedRecipe } = useSession();
 
@@ -55,8 +54,8 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
         </ThemedText>
       </View>
       {/* replace themed view with image below  */}
-      <ThemedView style={{borderRadius: 30, height: 69, width: 147, backgroundColor: "red"}}/> 
-      {/* <Image source={{uri: require('../assets/images/icon.png')}} style={{borderRadius: 30, height: 69, width: 147}}/>  */}
+      {/* <ThemedView style={{borderRadius: 30, height: 69, width: 147, backgroundColor: "red"}}/>  */}
+      <Image source={{ uri: image }} style={{borderRadius: 30, height: 69, width: 147}}/> 
       <View style={{
         flexDirection: 'row', 
         justifyContent: 'space-evenly',
