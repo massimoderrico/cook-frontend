@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
 import { Recipe } from "../types/graphql";
-import { View, Text, useColorScheme, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Colors } from "@/constants/Colors";
-import { Fonts } from "@/constants/Fonts";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { useRouter } from "expo-router";
 import { useSession } from "@/context";
@@ -53,7 +52,6 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
         </ThemedText>
       </View>
       {/* replace themed view with image below  */}
-      {/* <ThemedView style={{borderRadius: 30, height: 69, width: 147, backgroundColor: "red"}}/>  */}
       <Image source={{ uri: recipe.image || undefined }} style={{borderRadius: 30, height: 69, width: 147}}/> 
       <View style={{
         flexDirection: 'row', 

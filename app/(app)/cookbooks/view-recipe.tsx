@@ -210,9 +210,7 @@ export default function ViewRecipe () {
                     </ThemedView>
                     <Image source= {{uri: selectedRecipe.image || undefined}} style={{marginRight: 10, marginTop: 10, borderRadius: 30, height: 145, width: 145 }}/> 
                     </ThemedView>
-        
                     <ThemedView style={{marginLeft: 10}}>
-
                         {/* Ingredients Section */}
                         <ThemedText style={{ fontSize: 27, marginTop: 20, paddingVertical: 10}}>Ingredients</ThemedText>
                         <ThemedView style={{flexDirection: 'column', flexWrap: 'nowrap', justifyContent: 'space-between', width: '100%'}}>
