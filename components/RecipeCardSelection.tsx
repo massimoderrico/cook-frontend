@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
 import { Recipe } from "../types/graphql";
-import { View, Text, useColorScheme, TouchableOpacity } from "react-native";
+import { View, Text, useColorScheme, TouchableOpacity, Image } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -55,7 +55,7 @@ export const RecipeCardSelection = ({
                         </TouchableOpacity>
                 </View>
             {/* replace themed view with image below  */}
-            <ThemedView style={{borderRadius: 30, height: 69, width: 147, backgroundColor: "red"}}/> 
+            <Image source={{ uri: recipe.image || undefined}} style={{borderRadius: 30, height: 69, width: 147}}/> 
             <View style={{
                 flexDirection: 'row', 
                 justifyContent: 'space-evenly',

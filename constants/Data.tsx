@@ -18,3 +18,5 @@ export const MeasurementTypes = [
     { label: 'Recipes', value: 'Recipe' },
     { label: 'Cookbooks', value: 'Cookbook' },
   ]
+
+  export const defaultProfilePic = "https://drive.google.com/uc?export=download&id=1zL4OyhuKiojXW5OrY6IHg9R83DpMROVl"
