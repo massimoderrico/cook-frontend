@@ -40,12 +40,16 @@ export const RecipeCard = ({recipe}: {recipe: Recipe}) => {
       <View style={{ width: "100%", alignItems: "center" }}>
         <ThemedText
           invertColors={true}
+          numberOfLines={2} // Ensures at most 2 lines
+          ellipsizeMode="tail" // Adds "..." if text is too long
           style={{
             textAlign: "center",
             paddingBottom: 10,
+            paddingTop: 5,
             flexWrap: "wrap",
-            width: "100%",
+            width: "95%",
             paddingHorizontal: 10,
+            height: 40, // Ensure uniform height
           }}
         >
           {recipe.name}

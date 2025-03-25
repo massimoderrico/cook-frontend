@@ -136,7 +136,9 @@ export default function ViewRecipe () {
                                       paddingHorizontal: 10, 
                                       fontSize: 30, 
                                       lineHeight: 30,
-                                      }}>
+                                      flexGrow: 1, // Allow the text to take available space
+                                        flexShrink: 1, // Prevents overflow
+                                    }}>
                                           {selectedRecipe.name}
                                   </ThemedText>
                         <TouchableOpacity onPress={() => setMenuVisible(true)} style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
