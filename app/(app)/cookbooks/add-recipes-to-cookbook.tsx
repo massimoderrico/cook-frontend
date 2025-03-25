@@ -17,9 +17,14 @@ const GET_USER_RECIPES = gql`
     getUserRecipes(userId: $userId) {
       id
       name
+      image
       description
-      isPublic
+      ingredients
+      directions
+      cookTime
+      prepTime
       rating
+      isPublic
     }
   }
 `;

@@ -31,9 +31,9 @@ const users = [
         "email" : "kristian@gmail.com",
     },
     {   
-        "username" : "nicolas",
-        "password" : "nicolas",
-        "email" : "nicolas@gmail.com",
+        "username" : "nicholas",
+        "password" : "nicholas",
+        "email" : "nicholas@gmail.com",
     },
 ]
 
