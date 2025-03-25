@@ -34,6 +34,12 @@ export default function AppLayout() {
             <TabBarIcon name={focused ? 'home' : 'home-outline'} color={focused ? color: useThemeColor("text")} />
           ),
         }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault(); 
+            router.replace("/(app)"); 
+          },
+        }}
       />
       <Tabs.Screen
         name="search"
@@ -52,8 +58,8 @@ export default function AppLayout() {
         }}
         listeners={{
           tabPress: (e) => {
-            e.preventDefault(); // Prevent default behavior
-            router.replace("/(app)/create-recipe"); // Reset to index
+            e.preventDefault(); 
+            router.replace("/(app)/create-recipe"); 
           },
         }}
       />
@@ -66,8 +72,8 @@ export default function AppLayout() {
         }}
         listeners={{
           tabPress: (e) => {
-            e.preventDefault(); // Prevent default behavior
-            router.replace("/cookbooks"); // Reset to index
+            e.preventDefault(); 
+            router.replace("/cookbooks"); 
           },
         }}
       />
