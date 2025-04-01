@@ -1,45 +1,75 @@
 import { ThemedText } from "@/components/ThemedText";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { TouchableOpacity, View, Image } from "react-native";
+import { TouchableOpacity, View, Image, Alert } from "react-native";
 import { useSession } from "@/context";
 import { CustomButton } from "@/components/CustomButton";
 import { ThemedView } from "@/components/ThemedView";
-import { colors, Colors } from "@/constants/Colors";
+import { Colors } from "@/constants/Colors";
 import { Fonts } from "@/constants/Fonts";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import { defaultProfilePic } from "@/constants/Data";
+import { launchImageLibraryAsync, ImagePickerAsset, MediaTypeOptions } from "expo-image-picker";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { storage } from "@/firebaseConfig";
+import { gql, useMutation } from "@apollo/client";
+import { useStorageState } from "@/useStorageState";
+import { getToken } from "@/storage";
+
+const CHANGE_PICTURE_MUTATION = gql`
+mutation ChangePictureUser($id: Int!, $image: String!) {
+    changePictureUser(id: $id, image: $image) {
+    id
+    image
+    }
+}
+`;
 
 export default function Profile(){
     const backgroundColor = useThemeColor("background")
     const textColor = useThemeColor("text")
     const session = useSession()
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const [imageUri, setImageUri] = useState<string | null>(null);
+    const [changePictureUser, { loading, error }] = useMutation(CHANGE_PICTURE_MUTATION);
 
     const pickImage = async () => {
-      // Request permission to access media library
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        alert("Sorry, we need camera roll permissions to make this work!");
-        return;
-      }
-  
-      // Open image picker
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-  
-      if (!result.canceled) {
-        setSelectedImage(result.assets[0].uri); // Use the first selected image URI
-      }
-    };
-  
+        const response: ImagePicker.ImagePickerResult = await launchImageLibraryAsync({
+            mediaTypes: MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 1,
+        });
 
+        if (response.canceled) return;
+
+        if (response.assets && response.assets.length > 0) {
+            setImageUri(response.assets[0].uri);
+            await uploadImage(response.assets[0].uri, session.userId || 0);
+        }
+    };
+
+    const uploadImage = async (uri: string, userId: number) => {
+        try {
+            const response = await fetch(uri);
+            const blob = await response.blob();
+            const storageRef = ref(storage, `profile_pictures/${userId}`);
+        
+            await uploadBytes(storageRef, blob);
+            const downloadURL = await getDownloadURL(storageRef);
+            console.log(await getToken());
+          // downloadURL not being stored to postgres server
+            if (userId && userId > 0 && downloadURL) {
+                await changePictureUser({
+                    variables: { id: userId, image: downloadURL },
+                }).catch((err) => console.error("GraphQL Error:", JSON.stringify(err, null, 2)));
+            }
+            
+        } catch (error) {
+          console.error("Upload error:", error);        
+        }
+      };
+    
     return (
         <SafeAreaView
         style={{backgroundColor:backgroundColor, flex: 1, alignItems: "center"}}>
@@ -48,7 +78,7 @@ export default function Profile(){
             </ThemedText>
             <ThemedView style={{justifyContent: "center", alignItems: "center"}}>
             <View style={{height: 160, width: 160, borderRadius: 80}}>
-                <Image source={{uri: selectedImage || defaultProfilePic}} style={{height: 160, width: 160, borderRadius: 80}}/>
+                <Image source={{uri: imageUri || defaultProfilePic}} style={{height: 160, width: 160, borderRadius: 80}}/>
                 <TouchableOpacity onPress={pickImage} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: Colors.primary , position: "absolute", bottom: 0, right: 0, justifyContent: "center", alignItems: "center"}}>
                 <Ionicons name="camera" size={24} color={textColor}/>
                 </TouchableOpacity>
