@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/ThemedText";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { KeyboardAvoidingView, Platform, Switch } from "react-native"
+import { KeyboardAvoidingView, Platform, Switch, TouchableOpacity, View, Image } from "react-native"
 import { useState } from "react"
 import { Colors } from "@/constants/Colors"
 import { CustomButton } from "@/components/CustomButton"
@@ -13,6 +13,12 @@ import { ThemedView } from "@/components/ThemedView";
 import { useSession } from "@/context";
 import { useRouter } from "expo-router";
 import { gql, useMutation } from "@apollo/client";
+import { launchImageLibraryAsync, MediaTypeOptions } from "expo-image-picker";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { storage } from "@/firebaseConfig";
+import * as ImagePicker from "expo-image-picker";
+import { defaultProfilePic } from "@/constants/Data";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export const CREATE_RECIPE = gql`
   mutation CreateRecipe($data: RecipeCreateInput!) {
@@ -20,6 +26,14 @@ export const CREATE_RECIPE = gql`
       id
       name
       description
+    }
+  }
+`;
+
+export const EDIT_RECIPE = gql`
+  mutation EditRecipe($recipeId: Int!, $data: RecipeUpdateManyMutationInput!) {
+    editRecipe(recipeId: $recipeId, data: $data) {
+      image
     }
   }
 `;
@@ -32,11 +46,40 @@ export default function CreateRecipe () {
     const [isPublic, setIsPublic ] = useState<boolean>(false)
     const [ingredients, setIngredients] = useState<string[]>([])
     const [directions, setDirections] = useState<string[]>([])
-
-    const { userId } = useSession();
-    const router = useRouter();
+    const { userId , selectedRecipe} = useSession();
     const [createRecipe, { loading, data, error }] = useMutation(CREATE_RECIPE);
+    const [imageUri, setImageUri] = useState<string | null>(null);
+    const [editRecipe, { loading: editLoading, data: editData, error: editError }] = useMutation(EDIT_RECIPE);
+    // const [changePictureUser, { loading, error }] = useMutation(CHANGE_PICTURE_MUTATION);
+    const router = useRouter();
+    const textColor = useThemeColor("text")
+    const pickImage = async () => {
+        const response: ImagePicker.ImagePickerResult = await launchImageLibraryAsync({
+            mediaTypes: MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 1,
+        });
+        if (response.canceled) return;
 
+        if (response.assets && response.assets.length > 0) {
+            setImageUri(response.assets[0].uri);        }
+    };
+
+    const uploadImage = async (uri: string, recipeId: number) => {
+        try {
+            const response = await fetch(uri);
+            const blob = await response.blob();
+            const storageRef = ref(storage, `recipes/${recipeId}/`);
+        
+            await uploadBytes(storageRef, blob);
+            const downloadURL = await getDownloadURL(storageRef);
+            return downloadURL
+
+        } catch (error) {
+          console.error("Upload error:", error);        
+        }
+      };
+    
     const handleSaveRecipe = async () => { 
         if (!userId) return;
         try {
@@ -54,7 +97,20 @@ export default function CreateRecipe () {
               },
             },
           });
-          console.log("Recipe created:", data);
+        if (imageUri && data?.createRecipe.id) {
+            var imageUrl =  await uploadImage(imageUri, data?.createRecipe.id);
+            console.log("Image uploaded:", imageUrl);
+        }
+        if (imageUrl) {
+            await editRecipe({
+                variables: {
+                    recipeId: parseInt(data?.createRecipe.id),
+                    data: {
+                        image: { set: imageUrl }
+                    },
+                },
+            });
+        }
           if (data?.createRecipe) {
             router.push({
                 pathname: "/(app)/create-recipe/add-recipe-to-cookbooks",
@@ -72,6 +128,16 @@ export default function CreateRecipe () {
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={20} style={{flex: 1}}>
         <ThemedScrollView style={{paddingHorizontal: 30}} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag"
       contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }} >
+            { imageUri && 
+                <TouchableOpacity onPress={pickImage} style={{height: 80, borderRadius: 15, marginBottom: 10}}>
+                    <Image source={{uri: imageUri}} style={{height: 80, borderRadius: 15}}/>
+                </TouchableOpacity>
+            }
+            { !imageUri &&
+                <TouchableOpacity onPress={pickImage} style={{height: 80, borderRadius: 15, marginBottom: 10, backgroundColor: Colors.primary, justifyContent: "center", alignItems: "center"}}>
+                <Ionicons name="camera" size={24} color={textColor}/>
+                </TouchableOpacity>
+            }
             <ThemedTextInput 
             placeholder="Recipe Name" 
             value={recipeName} 
