@@ -14,8 +14,8 @@ import { defaultProfilePic } from "@/constants/Data";
 import { launchImageLibraryAsync, ImagePickerAsset, MediaTypeOptions } from "expo-image-picker";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { storage } from "@/firebaseConfig";
-import { gql, useMutation } from "@apollo/client";
-import { useStorageState } from "@/useStorageState";
+import { gql, useMutation, useQuery } from "@apollo/client";
+
 import { getToken } from "@/storage";
 
 const CHANGE_PICTURE_MUTATION = gql`
@@ -27,13 +27,23 @@ mutation ChangePictureUser($id: Int!, $image: String!) {
 }
 `;
 
+const GET_USER_BY_ID = gql`
+query GetUserById($id: Int!) {
+    getUserById(id: $id) {
+      image
+    }
+  }`;
+
 export default function Profile(){
     const backgroundColor = useThemeColor("background")
     const textColor = useThemeColor("text")
     const session = useSession()
-    const [imageUri, setImageUri] = useState<string | null>(null);
-    const [changePictureUser, { loading, error }] = useMutation(CHANGE_PICTURE_MUTATION);
-
+    const [changePictureUser,] = useMutation(CHANGE_PICTURE_MUTATION);
+    const { data, error } = useQuery(GET_USER_BY_ID, {
+        variables: { id: session.userId }, 
+      });
+    const [imageUri, setImageUri] = useState<string | null>(data.getUserById.image || null)
+    
     const pickImage = async () => {
         const response: ImagePicker.ImagePickerResult = await launchImageLibraryAsync({
             mediaTypes: MediaTypeOptions.Images,
@@ -43,9 +53,9 @@ export default function Profile(){
 
         if (response.canceled) return;
 
-        if (response.assets && response.assets.length > 0) {
+        if (response.assets && response.assets.length > 0 && session.userId) {
             setImageUri(response.assets[0].uri);
-            await uploadImage(response.assets[0].uri, session.userId || 0);
+            await uploadImage(response.assets[0].uri, session.userId);
         }
     };
 
@@ -57,8 +67,7 @@ export default function Profile(){
         
             await uploadBytes(storageRef, blob);
             const downloadURL = await getDownloadURL(storageRef);
-            console.log(await getToken());
-          // downloadURL not being stored to postgres server
+
             if (userId && userId > 0 && downloadURL) {
                 await changePictureUser({
                     variables: { id: userId, image: downloadURL },
