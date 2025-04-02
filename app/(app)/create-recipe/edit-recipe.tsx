@@ -30,6 +30,7 @@ export const EDIT_RECIPE = gql`
 `;
 
 
+
 export default function EditRecipe () {
     const { selectedRecipe } = useSession();
     const { userId } = useSession();
@@ -43,7 +44,7 @@ export default function EditRecipe () {
     const [isPublic, setIsPublic ] = useState<boolean>(selectedRecipe?.isPublic || false)
     const [ingredients, setIngredients] = useState<string[]>(selectedRecipe?.ingredients ? [...selectedRecipe.ingredients] : [])
     const [directions, setDirections] = useState<string[]>(selectedRecipe?.directions ? [...selectedRecipe.directions] : [])
-    const [imageUri, setImageUri] = useState<string | null>(null);
+    const [imageUri, setImageUri] = useState<string>(selectedRecipe?.image || "");
     const router = useRouter();
     const [editRecipe, { loading, data, error }] = useMutation(EDIT_RECIPE);
     const textColor = useThemeColor("text")
@@ -60,11 +61,11 @@ export default function EditRecipe () {
             setImageUri(response.assets[0].uri);        }
     };
 
-    const uploadImage = async (uri: string, recipeId: number) => {
+    const uploadImage = async (uri: string) => {
         try {
             const response = await fetch(uri);
             const blob = await response.blob();
-            const storageRef = ref(storage, `recipes/${selectedRecipe}/1`);
+            const storageRef = ref(storage, `recipes/${selectedRecipe.id}`);
         
             await uploadBytes(storageRef, blob);
             const downloadURL = await getDownloadURL(storageRef);
@@ -79,7 +80,7 @@ export default function EditRecipe () {
         if (!userId) return;
         try {
             if (imageUri) {
-            var imageUrl =  await uploadImage(imageUri, userId) 
+            var imageUrl =  await uploadImage(imageUri) 
             }
           const { data } = await editRecipe({
             variables: {

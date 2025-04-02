@@ -30,6 +30,14 @@ export const CREATE_RECIPE = gql`
   }
 `;
 
+export const EDIT_RECIPE = gql`
+  mutation EditRecipe($recipeId: Int!, $data: RecipeUpdateManyMutationInput!) {
+    editRecipe(recipeId: $recipeId, data: $data) {
+      image
+    }
+  }
+`;
+
 export default function CreateRecipe () {
     const [recipeName, onChangeRecipeName ] = useState<string>()
     const [description, onChangeDescription ] = useState<string>()
@@ -41,6 +49,7 @@ export default function CreateRecipe () {
     const { userId , selectedRecipe} = useSession();
     const [createRecipe, { loading, data, error }] = useMutation(CREATE_RECIPE);
     const [imageUri, setImageUri] = useState<string | null>(null);
+    const [editRecipe, { loading: editLoading, data: editData, error: editError }] = useMutation(EDIT_RECIPE);
     // const [changePictureUser, { loading, error }] = useMutation(CHANGE_PICTURE_MUTATION);
     const router = useRouter();
     const textColor = useThemeColor("text")
@@ -56,11 +65,11 @@ export default function CreateRecipe () {
             setImageUri(response.assets[0].uri);        }
     };
 
-    const uploadImage = async (uri: string, userId: number) => {
+    const uploadImage = async (uri: string, recipeId: number) => {
         try {
             const response = await fetch(uri);
             const blob = await response.blob();
-            const storageRef = ref(storage, `recipes/${selectedRecipe}/`);
+            const storageRef = ref(storage, `recipes/${recipeId}/`);
         
             await uploadBytes(storageRef, blob);
             const downloadURL = await getDownloadURL(storageRef);
@@ -88,11 +97,20 @@ export default function CreateRecipe () {
               },
             },
           });
-          console.log("Recipe created:", data);
-
-          // upload image and push url to server
-        //   data?.createRecipe.id
-
+        if (imageUri && data?.createRecipe.id) {
+            var imageUrl =  await uploadImage(imageUri, data?.createRecipe.id);
+            console.log("Image uploaded:", imageUrl);
+        }
+        if (imageUrl) {
+            await editRecipe({
+                variables: {
+                    recipeId: parseInt(data?.createRecipe.id),
+                    data: {
+                        image: { set: imageUrl }
+                    },
+                },
+            });
+        }
           if (data?.createRecipe) {
             router.push({
                 pathname: "/(app)/create-recipe/add-recipe-to-cookbooks",

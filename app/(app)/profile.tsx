@@ -16,8 +16,6 @@ import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage
 import { storage } from "@/firebaseConfig";
 import { gql, useMutation, useQuery } from "@apollo/client";
 
-import { getToken } from "@/storage";
-
 const CHANGE_PICTURE_MUTATION = gql`
 mutation ChangePictureUser($id: Int!, $image: String!) {
     changePictureUser(id: $id, image: $image) {
@@ -39,11 +37,13 @@ export default function Profile(){
     const textColor = useThemeColor("text")
     const session = useSession()
     const [changePictureUser,] = useMutation(CHANGE_PICTURE_MUTATION);
-    const { data, error } = useQuery(GET_USER_BY_ID, {
+    const { data, error } = 
+        useQuery(GET_USER_BY_ID, {
         variables: { id: session.userId }, 
+        skip: !session.userId,
       });
-    const [imageUri, setImageUri] = useState<string | null>(data.getUserById.image || null)
-    
+    const [imageUri, setImageUri] = useState<string | null>(data?.getUserById.image || null)
+
     const pickImage = async () => {
         const response: ImagePicker.ImagePickerResult = await launchImageLibraryAsync({
             mediaTypes: MediaTypeOptions.Images,

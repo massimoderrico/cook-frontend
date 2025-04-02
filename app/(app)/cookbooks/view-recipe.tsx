@@ -10,6 +10,8 @@ import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "expo-router";
 import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { Colors } from "@/constants/Colors";
+import { storage } from "@/firebaseConfig";
+import { deleteObject, ref } from "firebase/storage";
 
 const DELETE_RECIPE = gql`
   mutation DeleteRecipe($recipeId: Int!, $userId: Int!) {
@@ -83,6 +85,16 @@ export default function ViewRecipe () {
         router.push("/(app)/create-recipe/edit-recipe");
     };
     
+    const deleteRecipeImage = async (recipeId: string) => {
+        try {
+          if (!recipeId) throw new Error("Recipe ID is required");
+          const imageRef = ref(storage, `recipes/${recipeId}`);
+      
+          await deleteObject(imageRef);
+        } catch (error) {
+          console.error("Error deleting image:", error);
+        }
+      };
     const deleteRecipe = async () => {
         setMenuVisible(false);
         if (!userId) return;
@@ -93,6 +105,9 @@ export default function ViewRecipe () {
                     userId 
                 },
             });
+            if (data?.deleteRecipe) {
+                deleteRecipeImage(selectedRecipe.id);
+            }
         router.push("/(app)/cookbooks");
         } catch (err) {
             console.error("Error deleting recipe:", err);
