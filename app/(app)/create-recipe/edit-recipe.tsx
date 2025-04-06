@@ -127,7 +127,7 @@ export default function EditRecipe () {
             style={{
                 borderWidth: 2,
                 borderColor: Colors.primary,
-                paddingLeft: 10
+
             }}
             />
             <ThemedTextInput 
@@ -138,7 +138,6 @@ export default function EditRecipe () {
             style={{marginVertical: 10,
                 borderWidth: 2,
                 borderColor: Colors.primary,
-                paddingLeft: 10,
                 height: 100 
             }}
             />
@@ -155,10 +154,11 @@ export default function EditRecipe () {
                         onChangeText={onChangePrepTime} 
                         keyboardType="numeric"
                         style={{
-                            paddingLeft: 10,
-                            paddingHorizontal: 10,
+
+
                             borderWidth: 2,
                             borderColor: Colors.primary,
+                            width: 100
                             
                         }}
                     />
@@ -177,10 +177,9 @@ export default function EditRecipe () {
                         onChangeText={onChangeCookTime}
                         keyboardType="numeric" 
                         style={{
-                            paddingLeft: 10,
-                            paddingHorizontal: 10,
                             borderWidth: 2,
                             borderColor: Colors.primary,
+                            width: 100
                             
                         }}
                     />

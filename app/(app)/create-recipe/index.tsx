@@ -174,6 +174,7 @@ export default function CreateRecipe () {
                         style={{
                             borderWidth: 2,
                             borderColor: Colors.primary,
+                            width: 100
                             
                         }}
                     />
@@ -194,6 +195,7 @@ export default function CreateRecipe () {
                         style={{
                             borderWidth: 2,
                             borderColor: Colors.primary,
+                            width: 100
                         }}
                     />
                 </ThemedView>       
