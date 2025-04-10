@@ -95,7 +95,7 @@ export default function Cookbooks(){
     useEffect(
       useCallback(() => {
         if (userId) {
-          console.log("Refetching cookbooks...");
+          // console.log("Refetching cookbooks...");
           cookbookUserRefetch();
           permissionRefetch();
           permissionCookbookRefetch();

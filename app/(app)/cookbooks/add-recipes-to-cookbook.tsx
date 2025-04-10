@@ -66,7 +66,7 @@ export default function AddRecipesToCookbook(){
     useEffect(
       useCallback(() => {
         if (userId) {
-          console.log("Refetching recipes...");
+          // console.log("Refetching recipes...");
           refetch();
         }
       }, [userId])

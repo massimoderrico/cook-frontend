@@ -56,7 +56,7 @@ export default function HomePageRemodel() {
     useEffect(
         useCallback(() => {
             if (userId) {
-                console.log("Refetching recipes...");
+                // console.log("Refetching recipes...");
                 topsRefresh();
                 recentsRefresh();
             }
